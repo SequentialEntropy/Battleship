@@ -11,6 +11,7 @@ ships = {
 }
 board_size = 10
 placement = {}
+player_board = [[None for _ in range(10)] for _ in range(10)]
 
 @app.route("/placement", methods=["GET", "POST"])
 def placement_interface():
@@ -26,8 +27,27 @@ def placement_interface():
 
 @app.route("/")
 def root():
-    global placement
-    return placement
+    # global placement
+    # return placement
+    return render_template("main.html", player_board=player_board)
+
+@app.route("/attack", methods=["GET"])
+def process_attack():
+    x = request.args.get("x")
+    y = request.args.get("y")
+    
+    game_finished = False
+    if game_finished:
+        return jsonify({
+            "hit": True,
+            "AI_turn": (1, 2),
+            "finished": "Game Over, player wins!"
+        })
+    else:
+        return jsonify({
+            "hit": False,
+            "AI_Turn": (1, 2)
+        })
 
 if __name__ == "__main__":
     app.run(port=4000)
