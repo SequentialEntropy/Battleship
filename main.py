@@ -1,17 +1,12 @@
 from flask import Flask, request, render_template, jsonify
+import components
 
 app = Flask(__name__)
 
-ships = {
-    "Aircraft_Carrier": 5,
-    "Battleship": 4,
-    "Cruiser": 3,
-    "Submarine": 3,
-    "Destroyer": 2,
-}
+ships = components.create_battleships()
 board_size = 10
 placement = {}
-player_board = [[None for _ in range(10)] for _ in range(10)]
+player_board = components.initialise_board(board_size)
 
 @app.route("/placement", methods=["GET", "POST"])
 def placement_interface():
