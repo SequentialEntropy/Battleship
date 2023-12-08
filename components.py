@@ -12,6 +12,14 @@ def create_battleships(filename="battleships.txt"):
 
 
 
+def simple_placement_algorithm(board, ships):
+    row = 0
+    for ship in ships:
+        ship_length = ships[ship]
+        board[row][:ship_length] = [ship for _ in range(ship_length)]
+        row += 1
+    return board
+
 # Custom exception for an invalid algorithm, where the algorithm is not defined as an option in place_battleships
 class InvalidAlgorithmException(Exception):
     def __init__(self, algorithm):
@@ -21,5 +29,7 @@ class InvalidAlgorithmException(Exception):
 
 def place_battleships(board, ships, algorithm="simple"):
     match algorithm:
+        case "simple":
+            return simple_placement_algorithm(board, ships)
         case _:
             raise InvalidAlgorithmException(algorithm)
