@@ -51,26 +51,34 @@ def fit_ship(board, x, y, rotation, ship_length, ship_name):
 
     match rotation:
         case "h":
-            if x + ship_length > board_size: # If ship pokes out the right side of the board, throw an error
+            if x + ship_length > board_size: # If ship pokes out the right side of the board, throw an error, so the caller can handle the error upstream
                 raise ShipExceedsBoardBoundsException(x, y, rotation, ship_length, ship_name, board_size)
                 return False
             ship_coords = [(i, y) for i in range(x, x + ship_length)]
         case "v":
-            if y + ship_length > board_size: # If ship pokes out the bottom side of the board, throw an error
+            if y + ship_length > board_size: # If ship pokes out the bottom side of the board, throw an error, so the caller can handle the error upstream
                 raise ShipExceedsBoardBoundsException(x, y, rotation, ship_length, ship_name, board_size)
                 return False
             ship_coords = [(x, i) for i in range(y, y + ship_length)]
         case _:
             raise InvalidShipRotationException(rotation)
             return False
+    
 
-    # Preliminary check to determine if there is clearance to place the ship, since the board is modified in-place
+    # Having two loops is necessary to prevent the board from having an invalid state
+    # by making sure the boat is either fully placed or rejected and not in-between
+
+    # As the board is modified in-place and not on a copy, we have to make sure
+    # the function doesn't exit midway through the loop because of a clash being detected
+
+    # First loop is a preliminary check to determine if all cells in a given ship length are occupied by another ship
     for coord in ship_coords:
-        # Check if coordinates in the board is occupied
+        # Check if coordinates in the board is occupied (clash detection)
         if board[coord[1]][coord[0]] is not None:
             raise ShipObstructedException(x, y, rotation, ship_length, ship_name, board[coord[1]][coord[0]])
             return False
 
+    # Second loop is in charge of actually placing the ship
     for coord in ship_coords:
         board[coord[1]][coord[0]] = ship_name
     
@@ -137,5 +145,5 @@ def place_battleships(board, ships, algorithm="simple", placement=placement_from
             return random_placement_algorithm(board, ships)
         case "custom":
             return custom_placement_algorithm(board, ships, placement)
-        case _:
+        case _: # Raise an error if the algorithm argument is neither of the above
             raise InvalidAlgorithmException(algorithm)
