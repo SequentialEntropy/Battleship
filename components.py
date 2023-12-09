@@ -1,4 +1,5 @@
 import random
+import json
 
 def initialise_board(size=10):
     return [[None for _ in range(10)] for _ in range(10)]
@@ -101,6 +102,25 @@ def random_placement_algorithm(board, ships):
     
     return board
 
+def custom_placement_algorithm(board, ships, placement):
+    for ship in ships:
+        ship_length = ships[ship]
+
+        # TODO Catch ValueError when x and y are not of type "int"
+        x = int(placement[ship][0])
+        y = int(placement[ship][1])
+        rotation = placement[ship][2]
+
+        fit_ship(board, x, y, rotation, ship_length, ship)
+
+    return board
+
+def placement_from_file(filename="placement.json"):
+    with open(filename) as file:
+        placement_json = file.read()
+        placement_dict = json.loads(placement_json)
+        return placement_dict
+
 # Custom exception for an invalid algorithm, where the algorithm is not defined as an option in place_battleships
 class InvalidAlgorithmException(Exception):
     def __init__(self, algorithm):
@@ -108,11 +128,14 @@ class InvalidAlgorithmException(Exception):
     def __str__(self):
         return self.message
 
-def place_battleships(board, ships, algorithm="simple"):
+# Fourth parameter is only used to supply the custom_placement_algorithm with the placement JSON containing ship coordinates
+def place_battleships(board, ships, algorithm="simple", placement=placement_from_file("placement.json")):
     match algorithm:
         case "simple":
             return simple_placement_algorithm(board, ships)
         case "random":
             return random_placement_algorithm(board, ships)
+        case "custom":
+            return custom_placement_algorithm(board, ships, placement)
         case _:
             raise InvalidAlgorithmException(algorithm)
