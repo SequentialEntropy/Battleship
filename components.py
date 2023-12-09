@@ -25,7 +25,7 @@ def simple_placement_algorithm(board, ships):
         row += 1
     return board
 
-class ShipObstructedError(Exception):
+class ShipClashError(Exception):
     def __init__(self, x, y, rotation, ship_length, ship_name="Ship", obstructing_ship_name="Ship"):
         self.message = f"{ship_name} of length {ship_length} positioned at ({x}, {y}) with rotation '{rotation}' is obstructed by existing {obstructing_ship_name}"
     def __str__(self):
@@ -75,7 +75,7 @@ def fit_ship(board, x, y, rotation, ship_length, ship_name):
     for coord in ship_coords:
         # Check if coordinates in the board is occupied (clash detection)
         if board[coord[1]][coord[0]] is not None:
-            raise ShipObstructedError(x, y, rotation, ship_length, ship_name, board[coord[1]][coord[0]])
+            raise ShipClashError(x, y, rotation, ship_length, ship_name, board[coord[1]][coord[0]])
             return False
 
     # Second loop is in charge of actually placing the ship
@@ -105,7 +105,7 @@ def random_placement_algorithm(board, ships):
             try:
                 if fit_ship(board, x, y, rotation, ship_length, ship_name):
                     break # Stop attempting to place a ship
-            except ShipObstructedError:
+            except ShipClashError:
                 pass # Catch a failed attempt at placing a ship
     
     return board
