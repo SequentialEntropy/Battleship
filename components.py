@@ -2,7 +2,7 @@ import random
 import json
 
 def initialise_board(size=10):
-    return [[None for _ in range(10)] for _ in range(10)]
+    return [[None for _ in range(size)] for _ in range(size)]
 
 def create_battleships(filename="battleships.txt"):
     with open(filename) as file:
