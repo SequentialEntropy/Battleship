@@ -25,13 +25,13 @@ def simple_placement_algorithm(board, ships):
         row += 1
     return board
 
-class ShipObstructedException(Exception):
+class ShipObstructedError(Exception):
     def __init__(self, x, y, rotation, ship_length, ship_name="Ship", obstructing_ship_name="Ship"):
         self.message = f"{ship_name} of length {ship_length} positioned at ({x}, {y}) with rotation '{rotation}' is obstructed by existing {obstructing_ship_name}"
     def __str__(self):
         return self.message
 
-class ShipExceedsBoardBoundsException(Exception):
+class ShipExceedsBoardBoundsError(Exception):
     def __init__(self, x, y, rotation, ship_length, ship_name="Ship", board_size=None):
         if board_size is None:
             self.message = f"{ship_name} of length {ship_length} positioned at ({x}, {y}) with rotation '{rotation}' does not fit the board"
@@ -40,7 +40,7 @@ class ShipExceedsBoardBoundsException(Exception):
     def __str__(self):
         return self.message
 
-class InvalidShipRotationException(Exception):
+class InvalidShipRotationError(Exception):
     def __init__(self, rotation):
         self.message = f"The rotation '{rotation}' is not acceptable, it must be either 'h' or 'v'"
     def __str__(self):
@@ -52,16 +52,16 @@ def fit_ship(board, x, y, rotation, ship_length, ship_name):
     match rotation:
         case "h":
             if x + ship_length > board_size: # If ship pokes out the right side of the board, throw an error, so the caller can handle the error upstream
-                raise ShipExceedsBoardBoundsException(x, y, rotation, ship_length, ship_name, board_size)
+                raise ShipExceedsBoardBoundsError(x, y, rotation, ship_length, ship_name, board_size)
                 return False
             ship_coords = [(i, y) for i in range(x, x + ship_length)]
         case "v":
             if y + ship_length > board_size: # If ship pokes out the bottom side of the board, throw an error, so the caller can handle the error upstream
-                raise ShipExceedsBoardBoundsException(x, y, rotation, ship_length, ship_name, board_size)
+                raise ShipExceedsBoardBoundsError(x, y, rotation, ship_length, ship_name, board_size)
                 return False
             ship_coords = [(x, i) for i in range(y, y + ship_length)]
         case _:
-            raise InvalidShipRotationException(rotation)
+            raise InvalidShipRotationError(rotation)
             return False
     
 
@@ -75,7 +75,7 @@ def fit_ship(board, x, y, rotation, ship_length, ship_name):
     for coord in ship_coords:
         # Check if coordinates in the board is occupied (clash detection)
         if board[coord[1]][coord[0]] is not None:
-            raise ShipObstructedException(x, y, rotation, ship_length, ship_name, board[coord[1]][coord[0]])
+            raise ShipObstructedError(x, y, rotation, ship_length, ship_name, board[coord[1]][coord[0]])
             return False
 
     # Second loop is in charge of actually placing the ship
@@ -105,7 +105,7 @@ def random_placement_algorithm(board, ships):
             try:
                 if fit_ship(board, x, y, rotation, ship_length, ship):
                     break # Stop attempting to place a ship
-            except ShipObstructedException:
+            except ShipObstructedError:
                 pass # Catch a failed attempt at placing a ship
     
     return board
