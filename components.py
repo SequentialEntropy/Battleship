@@ -129,13 +129,6 @@ def placement_from_file(filename="placement.json"):
         placement_dict = json.loads(placement_json)
         return placement_dict
 
-# Custom exception for an invalid algorithm, where the algorithm is not defined as an option in place_battleships
-class InvalidAlgorithmException(Exception):
-    def __init__(self, algorithm):
-        self.message = f"The algorithm '{algorithm}' is not defined"
-    def __str__(self):
-        return self.message
-
 # Fourth parameter is only used to supply the custom_placement_algorithm with the placement JSON containing ship coordinates
 def place_battleships(board, ships, algorithm="simple", placement=placement_from_file("placement.json")):
     match algorithm:
@@ -146,4 +139,4 @@ def place_battleships(board, ships, algorithm="simple", placement=placement_from
         case "custom":
             return custom_placement_algorithm(board, ships, placement)
         case _: # Raise an error if the algorithm argument is neither of the above
-            raise InvalidAlgorithmException(algorithm)
+            raise ValueError(f"The algorithm '{algorithm}' is invalid")
