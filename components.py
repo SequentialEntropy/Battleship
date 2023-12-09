@@ -19,9 +19,9 @@ def create_battleships(filename="battleships.txt"):
 
 def simple_placement_algorithm(board, ships):
     row = 0
-    for ship in ships:
-        ship_length = ships[ship]
-        board[row][:ship_length] = [ship for _ in range(ship_length)]
+    for ship_name in ships:
+        ship_length = ships[ship_name]
+        board[row][:ship_length] = [ship_name for _ in range(ship_length)]
         row += 1
     return board
 
@@ -88,8 +88,8 @@ def fit_ship(board, x, y, rotation, ship_length, ship_name):
 def random_placement_algorithm(board, ships):
     board_size = len(board)
 
-    for ship in ships:
-        ship_length = ships[ship]
+    for ship_name in ships:
+        ship_length = ships[ship_name]
 
         while True: # Repeatedly attempt fitting a ship onto a board
             rotation = random.choice(["h", "v"])
@@ -103,7 +103,7 @@ def random_placement_algorithm(board, ships):
                 y = random.randint(0, board_size - 1 - ship_length)
 
             try:
-                if fit_ship(board, x, y, rotation, ship_length, ship):
+                if fit_ship(board, x, y, rotation, ship_length, ship_name):
                     break # Stop attempting to place a ship
             except ShipObstructedError:
                 pass # Catch a failed attempt at placing a ship
@@ -111,15 +111,15 @@ def random_placement_algorithm(board, ships):
     return board
 
 def custom_placement_algorithm(board, ships, placement):
-    for ship in ships:
-        ship_length = ships[ship]
+    for ship_name in ships:
+        ship_length = ships[ship_name]
 
         # TODO Catch ValueError when x and y are not of type "int"
-        x = int(placement[ship][0])
-        y = int(placement[ship][1])
-        rotation = placement[ship][2]
+        x = int(placement[ship_name][0])
+        y = int(placement[ship_name][1])
+        rotation = placement[ship_name][2]
 
-        fit_ship(board, x, y, rotation, ship_length, ship)
+        fit_ship(board, x, y, rotation, ship_length, ship_name)
 
     return board
 
