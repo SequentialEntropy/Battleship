@@ -1,23 +1,26 @@
 class ShipClashError(Exception):
     def __init__(self, x, y, rotation, ship_length, ship_name="Ship", obstructing_ship_name="Ship"):
-        self.message = f"{ship_name} of length {ship_length} positioned at ({x}, {y}) with rotation '{rotation}' is obstructed by existing {obstructing_ship_name}"
-    def __str__(self):
-        return self.message
+        super().__init__(
+            f"{ship_name} of length {ship_length} positioned at ({x}, {y}) with rotation '{rotation}' is obstructed by existing {obstructing_ship_name}"
+        )
 
 class ShipExceedsBoardBoundsError(Exception):
     def __init__(self, x, y, rotation, ship_length, ship_name="Ship", board_size=None):
         if board_size is None:
-            self.message = f"{ship_name} of length {ship_length} positioned at ({x}, {y}) with rotation '{rotation}' does not fit the board"
+            super().__init__(
+                f"{ship_name} of length {ship_length} positioned at ({x}, {y}) with rotation '{rotation}' does not fit the board"
+            )
+
         else:
-            self.message = f"{ship_name} of length {ship_length} positioned at ({x}, {y}) with rotation '{rotation}' does not fit the board of size {board_size}"
-    def __str__(self):
-        return self.message
+            super().__init__(
+                f"{ship_name} of length {ship_length} positioned at ({x}, {y}) with rotation '{rotation}' does not fit the board of size {board_size}"
+            )
 
 class MaxAttemptsReached(Exception):
     def __init__(self, attempts):
-        self.message = f"Max attempts ({attempts}) reached"
-    def __str__(self):
-        return self.message
+        super().__init__(
+            f"Max attempts ({attempts}) reached"
+        )
     
 
 
