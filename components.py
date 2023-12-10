@@ -40,12 +40,6 @@ class ShipExceedsBoardBoundsError(Exception):
     def __str__(self):
         return self.message
 
-class InvalidShipRotationError(Exception):
-    def __init__(self, rotation):
-        self.message = f"The rotation '{rotation}' is not acceptable, it must be either 'h' or 'v'"
-    def __str__(self):
-        return self.message
-
 def fit_ship(board, x, y, rotation, ship_length, ship_name):
     board_size = len(board)
 
@@ -63,7 +57,7 @@ def fit_ship(board, x, y, rotation, ship_length, ship_name):
             ship_coords = [(x, i) for i in range(y, y + ship_length)]
 
         case _:
-            raise InvalidShipRotationError(rotation)
+            raise ValueError(f"The rotation '{rotation}' is invalid, it must be either 'h' or 'v'")
 
     
 
