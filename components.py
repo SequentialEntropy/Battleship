@@ -40,6 +40,12 @@ class ShipExceedsBoardBoundsError(Exception):
     def __str__(self):
         return self.message
 
+class MaxAttemptsReached(Exception):
+    def __init__(self, attempts):
+        self.message = f"Max attempts ({attempts}) reached"
+    def __str__(self):
+        return self.message
+
 def fit_ship(board, x, y, rotation, ship_length, ship_name):
     board_size = len(board)
 
@@ -80,13 +86,14 @@ def fit_ship(board, x, y, rotation, ship_length, ship_name):
     # Ship is fitted onto the board successfully
     return True
 
-def random_placement_algorithm(board, ships):
+def random_placement_algorithm(board, ships, max_attempts=100):
     board_size = len(board)
 
     for ship_name in ships:
         ship_length = ships[ship_name]
 
-        while True: # Repeatedly attempt fitting a ship onto a board
+        error = None
+        for _ in range(max_attempts): # Repeatedly attempt fitting a ship onto a board
             rotation = random.choice(["h", "v"])
 
             # Prevent ship exceeding board bounds
@@ -100,8 +107,12 @@ def random_placement_algorithm(board, ships):
             try:
                 if fit_ship(board, x, y, rotation, ship_length, ship_name):
                     break # Stop attempting to place a ship
-            except ShipClashError:
-                pass # Catch a failed attempt at placing a ship
+            except ShipClashError as e:
+                error = e
+                continue # Move onto the next attempt
+
+        else: # If loop exits without breaking
+            raise MaxAttemptsReached(max_attempts) from error
     
     return board
 
