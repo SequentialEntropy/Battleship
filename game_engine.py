@@ -16,7 +16,7 @@ def attack(coordinates, board, battleships):
 def cli_coordinates_input():
     
     while True:
-        val = input("Enter the x-coordinate to attack: ")
+        val = input("Attack x-coordinate: ")
         try:
             x = int(val)
             break
@@ -24,7 +24,7 @@ def cli_coordinates_input():
             print(f"{val} is not a number")
 
     while True:
-        val = input("Enter the y-coordinate to attack: ")
+        val = input("Attack y-coordinate: ")
         try:
             y = int(val)
             break
