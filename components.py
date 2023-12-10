@@ -51,12 +51,12 @@ def fit_ship(board, x, y, rotation, ship_length, ship_name):
 
     match rotation:
         case "h":
-            if x + ship_length > board_size: # If ship pokes out the right side of the board, throw an error, so the caller can handle the error upstream
+            if x + ship_length > board_size: # If ship pokes out the right side of the board, raise an error
                 raise ShipExceedsBoardBoundsError(x, y, rotation, ship_length, ship_name, board_size)
                 return False
             ship_coords = [(i, y) for i in range(x, x + ship_length)]
         case "v":
-            if y + ship_length > board_size: # If ship pokes out the bottom side of the board, throw an error, so the caller can handle the error upstream
+            if y + ship_length > board_size: # If ship pokes out the bottom side of the board, raise an error
                 raise ShipExceedsBoardBoundsError(x, y, rotation, ship_length, ship_name, board_size)
                 return False
             ship_coords = [(x, i) for i in range(y, y + ship_length)]
