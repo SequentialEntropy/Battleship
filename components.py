@@ -13,14 +13,12 @@ def create_battleships(filename="battleships.txt"):
 
         return ships
 
-def placement_from_file(filename="placement.json"):
-    with open(filename) as file:
-        placement_json = file.read()
-        placement_dict = json.loads(placement_json)
-        return placement_dict
+def dict_from_json_file(filename):
+    with open(filename, "r", encoding="utf-8") as file:
+        return json.loads(file.read())
 
 # Fourth parameter is only used to supply the custom_placement_algorithm with the placement JSON containing ship coordinates
-def place_battleships(board, ships, algorithm="simple", placement=placement_from_file("placement.json")):
+def place_battleships(board, ships, algorithm="simple", placement=dict_from_json_file("placement.json")):
     match algorithm:
         case "simple":
             return simple_placement_algorithm(board, ships)
