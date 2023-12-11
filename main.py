@@ -45,10 +45,9 @@ def process_attack():
     coordinates = (x, y)
 
     if coordinates in players["AI"]["board_history"]:
-        return jsonify({
-            "hit": players["AI"]["board_history"][coordinates],
-            "finished": f"You've already attacked {coordinates}"
-        })
+        # Prevent showing "undefined" in game log by not returning JSON, causing a 409 and a parsing error on the client
+        # Although this shows as an error in the browser console, this is not visible to the user
+        return f"You've already attacked {coordinates}", 409
 
     hit_or_miss_ai_board = attack(coordinates, players["AI"]["board"], players["AI"]["battleships"])
     players["AI"]["board_history"][coordinates] = hit_or_miss_ai_board
