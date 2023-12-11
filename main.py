@@ -15,7 +15,7 @@ def placement_interface():
     
     elif request.method == "POST":
         
-        placement = request.json
+        placement = request.get_json()
 
         players["Player"] = {
             "board": components.place_battleships(components.initialise_board(), components.create_battleships(), "custom", placement),
