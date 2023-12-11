@@ -23,12 +23,12 @@ def generate_attack(board_size=10, algorithm="random"):
             raise ValueError(f"The algorithm '{algorithm}' is invalid")
 
 def print_board(board, board_history, show_ships=True):
-    board_length = len(board)
+    board_size = len(board)
 
-    print(" ".join([" ", grey] + [" " * (2 - len(str(i))) + str(i) for i in range(board_length)] + [reset]))
-    for y in range(board_length):
+    print(" ".join([" ", grey] + [" " * (2 - len(str(i))) + str(i) for i in range(board_size)] + [reset]))
+    for y in range(board_size):
         print(grey + " " * (2 - len(str(y))) + str(y), end=reset + " ")
-        for x in range(board_length):
+        for x in range(board_size):
             
             colour = (red if board_history[(x, y)] else aqua) if (x, y) in board_history else reset
 
