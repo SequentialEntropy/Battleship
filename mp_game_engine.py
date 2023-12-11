@@ -8,15 +8,17 @@ red = "\033[91m"
 green = "\033[92m"
 reset = "\033[0m"
 
-# Pregenerate attack sequence to prevent duplicate attacks
-def attack_sequence(board_size):
-    coordinates = [i for i in range(board_size**2)]
-    random.shuffle(coordinates)
-    for i in coordinates:
-        yield (int(i / 10), int(1 % 10))
+def random_attack_algorithm(board_size):
+    x = random.randint(0, board_size - 1)
+    y = random.randint(0, board_size - 1)
+    return (x, y)
 
-def generate_attack(board_size=10):
-    return next(attack_sequence(board_size))
+def generate_attack(board_size=10, algorithm="random"):
+    match algorithm:
+        case "random":
+            return random_attack_algorithm(board_size)
+        case _:
+            raise ValueError(f"The algorithm '{algorithm}' is invalid")
 
 def print_board(board, board_history, show_ships=True):
     board_length = len(board)
@@ -25,7 +27,7 @@ def print_board(board, board_history, show_ships=True):
         for x in range(board_length):
 
             colour = red if (x, y) in board_history else reset
-            
+
             shape = "##" if (board[y][x] is not None and show_ships) or board_history.get((x, y), False) else "::"
 
             print(f"{colour}{shape}{reset}", end=" ")
