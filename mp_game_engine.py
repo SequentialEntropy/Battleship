@@ -99,5 +99,14 @@ def ai_opponent_game_loop():
     # Game Over
     print("Game Over")
 
+    print("-" * 29)
+
+    print("AI's board revealed")
+    print_board(players["AI"]["board"], players["AI"]["board_history"], show_ships=True)
+
+    print("\nYour board")
+    print_board(players["Player"]["board"], players["Player"]["board_history"], show_ships=True)
+
+
 if __name__ == "__main__":
     ai_opponent_game_loop()
