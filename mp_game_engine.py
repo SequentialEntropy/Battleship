@@ -6,6 +6,7 @@ players = {}
 
 red = "\033[91m"
 green = "\033[92m"
+aqua = "\033[96m"
 reset = "\033[0m"
 
 def random_attack_algorithm(board_size):
@@ -25,12 +26,14 @@ def print_board(board, board_history, show_ships=True):
 
     for y in range(board_length):
         for x in range(board_length):
-
-            colour = red if (x, y) in board_history else reset
-
-            shape = "##" if (board[y][x] is not None and show_ships) or board_history.get((x, y), False) else "::"
+            
+            colour = (red if board_history[(x, y)] else aqua) if (x, y) in board_history else reset
+            
+            shape = "##" if (board[y][x] is not None and show_ships) or ((x, y) in board_history) else "::"
 
             print(f"{colour}{shape}{reset}", end=" ")
+
+        print(end=" " * 10)
 
         print()
 
