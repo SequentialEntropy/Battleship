@@ -4,6 +4,7 @@ from game_engine import attack, cli_coordinates_input
 
 players = {}
 
+grey = "\033[90m"
 red = "\033[91m"
 green = "\033[92m"
 aqua = "\033[96m"
@@ -24,16 +25,16 @@ def generate_attack(board_size=10, algorithm="random"):
 def print_board(board, board_history, show_ships=True):
     board_length = len(board)
 
+    print(" ".join([" ", grey] + [" " * (2 - len(str(i))) + str(i) for i in range(board_length)] + [reset]))
     for y in range(board_length):
+        print(grey + " " * (2 - len(str(y))) + str(y), end=reset + " ")
         for x in range(board_length):
             
             colour = (red if board_history[(x, y)] else aqua) if (x, y) in board_history else reset
-            
+
             shape = "##" if (board[y][x] is not None and show_ships) or ((x, y) in board_history) else "::"
 
             print(f"{colour}{shape}{reset}", end=" ")
-
-        print(end=" " * 10)
 
         print()
 
@@ -52,7 +53,7 @@ def ai_opponent_game_loop():
         "board_history": {} # Store the coords:result as (int, int):bool to track the Player's attack attempt history
     }
 
-    print("-" * 29)
+    print("-" * 32)
 
     while True:
         # Print Boards
@@ -62,7 +63,7 @@ def ai_opponent_game_loop():
         print("\nYour board")
         print_board(players["Player"]["board"], players["Player"]["board_history"], show_ships=True)
 
-        print("-" * 29)
+        print("-" * 32)
 
         # Player attacks AI
         while True:
@@ -71,7 +72,7 @@ def ai_opponent_game_loop():
                 break
             print(f"You've already attacked {coordinates}")
 
-        print("-" * 29)
+        print("-" * 32)
 
         hit_or_miss = attack(coordinates, players["AI"]["board"], players["AI"]["battleships"])
         print(f"You attacked {coordinates} - {green}Hit{reset}" if hit_or_miss else f"You attacked {coordinates} - {red}Miss{reset}")
@@ -97,12 +98,12 @@ def ai_opponent_game_loop():
             print(f"{red}AI Won{reset}")
             break
 
-        print("-" * 29)
+        print("-" * 32)
 
     # Game Over
     print("Game Over")
 
-    print("-" * 29)
+    print("-" * 32)
 
     print("AI's board revealed")
     print_board(players["AI"]["board"], players["AI"]["board_history"], show_ships=True)
