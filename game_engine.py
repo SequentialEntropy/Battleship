@@ -13,12 +13,17 @@ def attack(coordinates, board, battleships):
 
     return True
 
-def cli_coordinates_input():
+def cli_coordinates_input(board_size=10):
     
     while True:
         val = input("Attack x-coordinate: ")
         try:
             x = int(val)
+
+            if x not in range(board_size):
+                print(f"{x} does not fit within 0 to {board_size - 1}")
+                continue
+
             break
         except ValueError:
             print(f"{val} is not a number")
@@ -27,6 +32,11 @@ def cli_coordinates_input():
         val = input("Attack y-coordinate: ")
         try:
             y = int(val)
+
+            if y not in range(board_size):
+                print(f"{y} does not fit within 0 to {board_size - 1}")
+                continue
+
             break
         except ValueError:
             print(f"{val} is not a number")
