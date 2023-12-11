@@ -60,7 +60,11 @@ def ai_opponent_game_loop():
         print("-" * 29)
 
         # Player attacks AI
-        coordinates = cli_coordinates_input()
+        while True:
+            coordinates = cli_coordinates_input()
+            if coordinates not in players["AI"]["board_history"]:
+                break
+            print(f"You've already attacked {coordinates}")
 
         print("-" * 29)
 
@@ -68,21 +72,20 @@ def ai_opponent_game_loop():
         print(f"You attacked {coordinates} - {green}Hit{reset}" if hit_or_miss else f"You attacked {coordinates} - {red}Miss{reset}")
         players["AI"]["board_history"][coordinates] = hit_or_miss
 
-        print(players["AI"]["board_history"])
-
         # All AI ships are sunk
         if all(ship_length == 0 for ship_length in players["AI"]["battleships"].values()):
             print(f"{green}You Won{reset}")
             break
 
         # AI attacks Player
-        coordinates = generate_attack()
+        while True:
+            coordinates = generate_attack()
+            if coordinates not in players["Player"]["board_history"]:
+                break
 
         hit_or_miss = attack(coordinates, players["Player"]["board"], players["Player"]["battleships"])
         print(f"AI  attacked {coordinates} - {red}Hit{reset}" if hit_or_miss else f"AI  attacked {coordinates} - {green}Miss{reset}")
         players["Player"]["board_history"][coordinates] = hit_or_miss
-
-        print(players["Player"]["board_history"])
 
         # All Player ships are sunk
         if all(ship_length == 0 for ship_length in players["Player"]["battleships"].values()):
