@@ -23,7 +23,7 @@ def dict_from_json_file(filename):
         return json.loads(file.read())
 
 # Fourth parameter is only used to supply the custom_placement_algorithm with the placement JSON containing ship coordinates
-def place_battleships(board, ships, algorithm="simple", placement=dict_from_json_file("placement.json")):
+def place_battleships(board: list[list[str | None]], ships: dict[str, int], algorithm: str = "simple", placement: dict[str, list[str]] = dict_from_json_file("placement.json")) -> list[list[str | None]]:
     match algorithm:
         case "simple":
             return simple_placement_algorithm(board, ships)
