@@ -1,10 +1,10 @@
 import json
 from algorithms import simple_placement_algorithm, random_placement_algorithm, custom_placement_algorithm
 
-def initialise_board(size=10):
+def initialise_board(size: int = 10) -> list[list[int]]:
     return [[None for _ in range(size)] for _ in range(size)]
 
-def create_battleships(filename="battleships.txt"):
+def create_battleships(filename: str = "battleships.txt") -> dict[str, int]:
     with open(filename) as file:
         # TODO Input validation, check for "string:int" format for each line
         lines = file.readlines()
