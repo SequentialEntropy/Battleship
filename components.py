@@ -5,11 +5,16 @@ def initialise_board(size: int = 10) -> list[list[int]]:
     return [[None for _ in range(size)] for _ in range(size)]
 
 def create_battleships(filename: str = "battleships.txt") -> dict[str, int]:
+    ships = {}
     with open(filename) as file:
-        # TODO Input validation, check for "string:int" format for each line
-        lines = file.readlines()
 
-        ships = {line.split(":")[0]: int(line.split(":")[1].replace("\n", "")) for line in lines}
+        for line in file:
+            data = line.strip().split(":")
+            try:
+                ship_name, ship_length = data
+                ships[ship_name] = int(ship_length)
+            except ValueError as e:
+                raise ValueError(f"'{line}' in {filename} does not follow the 'ship_name:ship_length' format") from e
 
         return ships
 
