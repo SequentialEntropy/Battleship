@@ -7,7 +7,7 @@ def initialise_board(size: int = 10) -> Board:
     return [[None for _ in range(size)] for _ in range(size)]
 
 def create_battleships(filename: str = "battleships.txt") -> dict[str, int]:
-    ships = {}
+    ships: dict[str, int] = {}
     with open(filename) as file:
 
         for line in file:
