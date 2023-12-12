@@ -18,7 +18,7 @@ def create_battleships(filename: str = "battleships.txt") -> dict[str, int]:
 
         return ships
 
-def dict_from_json_file(filename):
+def dict_from_json_file(filename: str) -> dict:
     with open(filename, "r", encoding="utf-8") as file:
         return json.loads(file.read())
 
