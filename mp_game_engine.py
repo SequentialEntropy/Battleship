@@ -20,7 +20,7 @@ def random_attack_algorithm(board_size: int) -> Coordinates:
 
     :param board_size: Range for random number generator
     :type board_size: int
-    :return: Tuple of random int pair representing x and y coordinates
+    :return: Tuple of random `int` pair representing x and y coordinates
     :rtype: Coordinates
     """
     x = random.randint(0, board_size - 1)
@@ -37,7 +37,7 @@ def generate_attack(board_size: int = 10, algorithm: str = "random") -> Coordina
         defaults to "random"
     :type algorithm: str, optional
     :raises ValueError: When `algorithm` does not match any defined algorithms
-    :return: Tuple int pair representing x and y coordinates of AI's turn
+    :return: Tuple `int` pair representing x and y coordinates of AI's turn
     :rtype: Coordinates
     """
     match algorithm:
@@ -51,7 +51,7 @@ def print_board(board: Board, board_history: dict[Coordinates, bool], show_ships
 
     :param board: Board to display
     :type board: Board
-    :param board_history: Coordinate bool pair to track attacked cell colours
+    :param board_history: `Coordinates:bool` pair to track attacked cell colour
     :type board_history: dict[Coordinates, bool]
     :param show_ships: Show or hide ships not yet revealed in `board_history`,
         defaults to True

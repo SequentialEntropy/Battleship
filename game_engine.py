@@ -38,7 +38,7 @@ def cli_coordinates_input(board_size: int = 10) -> Coordinates:
     :param board_size: Size of board for range validation check,
         defaults to 10
     :type board_size: int, optional
-    :return: Tuple pair of int representing x and y coordinates
+    :return: Tuple pair of `int` representing x and y coordinates
     :rtype: Coordinates
     """
     while True:
@@ -95,7 +95,7 @@ def print_board(board: Board, show_acronym: bool = True) -> None:
 
 def simple_game_loop() -> None:
     """Simple game loop with one player, one board and ships always revealed"""
-    
+
     print("Welcome to Battleship")
 
     board = components.initialise_board()
