@@ -16,11 +16,30 @@ aqua = "\033[96m"
 reset = "\033[0m"
 
 def random_attack_algorithm(board_size: int) -> Coordinates:
+    """Generates random x and y coordinates within range of given `board_size`
+
+    :param board_size: Range for random number generator
+    :type board_size: int
+    :return: Tuple of random int pair representing x and y coordinates
+    :rtype: Coordinates
+    """
     x = random.randint(0, board_size - 1)
     y = random.randint(0, board_size - 1)
     return (x, y)
 
 def generate_attack(board_size: int = 10, algorithm: str = "random") -> Coordinates:
+    """Generates AI attack coordinates based on `algorithm`
+
+    :param board_size: Size of board,
+        defaults to 10
+    :type board_size: int, optional
+    :param algorithm: Algorithm used,
+        defaults to "random"
+    :type algorithm: str, optional
+    :raises ValueError: When `algorithm` does not match any defined algorithms
+    :return: Tuple int pair representing x and y coordinates of AI's turn
+    :rtype: Coordinates
+    """
     match algorithm:
         case "random":
             return random_attack_algorithm(board_size)
@@ -28,6 +47,16 @@ def generate_attack(board_size: int = 10, algorithm: str = "random") -> Coordina
             raise ValueError(f"The algorithm '{algorithm}' is invalid")
 
 def print_board(board: Board, board_history: dict[Coordinates, bool], show_ships: bool = True) -> None:
+    """Prints an ASCII representation of the board's state with grid headings
+
+    :param board: Board to display
+    :type board: Board
+    :param board_history: Coordinate bool pair to track attacked cell colours
+    :type board_history: dict[Coordinates, bool]
+    :param show_ships: Show or hide ships not yet revealed in `board_history`,
+        defaults to True
+    :type show_ships: bool, optional
+    """
     board_size = len(board)
 
     print(" ".join([" ", grey] + [" " * (2 - len(str(i))) + str(i) for i in range(board_size)] + [reset]))
@@ -44,6 +73,8 @@ def print_board(board: Board, board_history: dict[Coordinates, bool], show_ships
         print()
 
 def ai_opponent_game_loop() -> None:
+    """Fully functional player vs AI game loop on the command-line"""
+
     print("Welcome to Battleship")
 
     players["Player"] = {
