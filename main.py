@@ -5,28 +5,29 @@ import components
 
 app = Flask(__name__)
 
-ships = components.create_battleships()
-board_size = 10
-
 @app.route("/placement", methods=["GET", "POST"])
 def placement_interface() -> str | Response:
+
+    ships = components.create_battleships()
+    board_size = 6
+
     match request.method:
+
         case "GET":
             return render_template("placement.html", ships=ships, board_size=board_size)
     
         case "POST":
-        
             placement = request.get_json()
 
             players["Player"] = {
-                "board": components.place_battleships(components.initialise_board(board_size), components.create_battleships(), "custom", placement),
-                "battleships": components.create_battleships(),
+                "board": components.place_battleships(components.initialise_board(board_size), ships, "custom", placement),
+                "battleships": ships.copy(),
                 "board_history": {} # Store the coords:result as (int, int):bool to track the AI's attack attempt history
             }
 
             players["AI"] = {
-                "board": components.place_battleships(components.initialise_board(board_size), components.create_battleships(), "random"),
-                "battleships": components.create_battleships(),
+                "board": components.place_battleships(components.initialise_board(board_size), ships, "random"),
+                "battleships": ships.copy(),
                 "board_history": {} # Store the coords:result as (int, int):bool to track the Player's attack attempt history
             }
 
@@ -56,11 +57,11 @@ def process_attack() -> tuple[str, int] | Response:
         hit_or_miss_ai_board = attack(coordinates, players["AI"]["board"], players["AI"]["battleships"])
         players["AI"]["board_history"][coordinates] = hit_or_miss_ai_board
     except IndexError:
-        return f"{coordinates} is not within board of size {board_size}", 400
+        return f'{coordinates} is not within board of size {len(players["AI"]["board"])}', 400
 
     # AI attacks Player
     while True:
-        coordinates = generate_attack(board_size)
+        coordinates = generate_attack(len(players["Player"]["board"]))
         if coordinates not in players["Player"]["board_history"]:
             break
 
