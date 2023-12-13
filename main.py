@@ -7,7 +7,11 @@ app = Flask(__name__)
 
 @app.route("/placement", methods=["GET", "POST"])
 def placement_interface() -> str | Response:
+    """Placement interface, initialises game with user-specified player board
 
+    :return: HTML template `str` on GET, JSON success message on POST
+    :rtype: str | Response
+    """
     ships = components.create_battleships()
     board_size = 6
 
@@ -37,12 +41,22 @@ def placement_interface() -> str | Response:
 
 @app.route("/")
 def root() -> str:
+    """Game interface to render player and AI's board on the browser
+
+    :return: HTML template `str`
+    :rtype: str
+    """
     player_board = players["Player"]["board"]
     return render_template("main.html", player_board=player_board)
 
 @app.route("/attack", methods=["GET"])
 def process_attack() -> tuple[str, int] | Response:
+    """Process attack with user-specified coordinates, generate AI attack
 
+    :return: JSON containing hit or miss `bool` and AI attack coordinates,
+        returns a message and an HTTP error code when validation fails
+    :rtype: tuple[str, int] | Response
+    """
     # Player attacks AI
     x = request.args.get("x", default=-1, type=int)
     y = request.args.get("y", default=-1, type=int)
