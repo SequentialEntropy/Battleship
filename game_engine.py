@@ -2,8 +2,9 @@ import components
 
 # Define type aliases
 Board = list[list[str | None]]
+Coordinates = tuple[int, int]
 
-def attack(coordinates: tuple[int, int], board: Board, battleships: dict[str, int]) -> bool:
+def attack(coordinates: Coordinates, board: Board, battleships: dict[str, int]) -> bool:
 
     ship_name = board[coordinates[1]][coordinates[0]]
 
@@ -17,7 +18,7 @@ def attack(coordinates: tuple[int, int], board: Board, battleships: dict[str, in
 
     return True
 
-def cli_coordinates_input(board_size: int = 10) -> tuple[int, int]:
+def cli_coordinates_input(board_size: int = 10) -> Coordinates:
     
     while True:
         val = input("Attack x-coordinate: ")

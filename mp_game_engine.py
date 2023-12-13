@@ -5,6 +5,7 @@ from typing import Any
 
 # Define type aliases
 Board = list[list[str | None]]
+Coordinates = tuple[int, int]
 
 players: dict[str, dict[str, Any]] = {}
 
@@ -14,19 +15,19 @@ green = "\033[92m"
 aqua = "\033[96m"
 reset = "\033[0m"
 
-def random_attack_algorithm(board_size: int) -> tuple[int, int]:
+def random_attack_algorithm(board_size: int) -> Coordinates:
     x = random.randint(0, board_size - 1)
     y = random.randint(0, board_size - 1)
     return (x, y)
 
-def generate_attack(board_size: int = 10, algorithm: str = "random") -> tuple[int, int]:
+def generate_attack(board_size: int = 10, algorithm: str = "random") -> Coordinates:
     match algorithm:
         case "random":
             return random_attack_algorithm(board_size)
         case _:
             raise ValueError(f"The algorithm '{algorithm}' is invalid")
 
-def print_board(board: Board, board_history: dict[tuple[int, int], bool], show_ships: bool = True) -> None:
+def print_board(board: Board, board_history: dict[Coordinates, bool], show_ships: bool = True) -> None:
     board_size = len(board)
 
     print(" ".join([" ", grey] + [" " * (2 - len(str(i))) + str(i) for i in range(board_size)] + [reset]))
