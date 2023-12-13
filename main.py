@@ -52,8 +52,11 @@ def process_attack() -> tuple[str, int] | Response:
         # Although this shows as an error in the browser console, this is not visible to the user
         return f"You've already attacked {coordinates}", 409
 
-    hit_or_miss_ai_board = attack(coordinates, players["AI"]["board"], players["AI"]["battleships"])
-    players["AI"]["board_history"][coordinates] = hit_or_miss_ai_board
+    try:
+        hit_or_miss_ai_board = attack(coordinates, players["AI"]["board"], players["AI"]["battleships"])
+        players["AI"]["board_history"][coordinates] = hit_or_miss_ai_board
+    except IndexError:
+        return f"{coordinates} is not within board of size {board_size}", 400
 
     # AI attacks Player
     while True:
