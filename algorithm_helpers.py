@@ -1,11 +1,14 @@
+# Define type aliases
+Board = list[list[str | None]]
+
 class ShipClashError(Exception):
-    def __init__(self, x, y, rotation, ship_length, ship_name="Ship", obstructing_ship_name="Ship"):
+    def __init__(self, x: int, y: int, rotation: str, ship_length: int, ship_name: str = "Ship", obstructing_ship_name: str = "Ship") -> None:
         super().__init__(
             f"{ship_name} of length {ship_length} positioned at ({x}, {y}) with rotation '{rotation}' is obstructed by existing {obstructing_ship_name}"
         )
 
 class ShipExceedsBoardBoundsError(Exception):
-    def __init__(self, x, y, rotation, ship_length, ship_name="Ship", board_size=None):
+    def __init__(self, x: int, y: int, rotation: str, ship_length: int, ship_name: str = "Ship", board_size: int | None = None) -> None:
         if board_size is None:
             super().__init__(
                 f"{ship_name} of length {ship_length} positioned at ({x}, {y}) with rotation '{rotation}' does not fit the board"
@@ -17,14 +20,14 @@ class ShipExceedsBoardBoundsError(Exception):
             )
 
 class MaxAttemptsReached(Exception):
-    def __init__(self, attempts):
+    def __init__(self, attempts: int) -> None:
         super().__init__(
             f"Max attempts ({attempts}) reached"
         )
     
 
 
-def fit_ship(board, x, y, rotation, ship_length, ship_name):
+def fit_ship(board: Board, x: int, y: int, rotation: str, ship_length: int, ship_name: str) -> bool:
     board_size = len(board)
 
     match rotation:
@@ -56,8 +59,9 @@ def fit_ship(board, x, y, rotation, ship_length, ship_name):
     # First loop is a preliminary check to determine if all cells in a given ship length are occupied by another ship
     for coord in ship_coords:
         # Check if coordinates in the board is occupied (clash detection)
-        if board[coord[1]][coord[0]] is not None:
-            raise ShipClashError(x, y, rotation, ship_length, ship_name, board[coord[1]][coord[0]])
+        obstructing_ship_name = board[coord[1]][coord[0]]
+        if obstructing_ship_name is not None:
+            raise ShipClashError(x, y, rotation, ship_length, ship_name, obstructing_ship_name)
 
     # Second loop is in charge of actually placing the ship (modifying board)
     for coord in ship_coords:
