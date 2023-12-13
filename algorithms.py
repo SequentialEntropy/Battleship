@@ -6,6 +6,17 @@ from algorithm_helpers import MaxAttemptsReached, ShipClashError, fit_ship
 Board = list[list[str | None]]
 
 def simple_placement_algorithm(board: Board, ships: dict[str, int]) -> Board:
+    """Places ships horizontally, one ship per row
+
+    :param board: Board to modify
+    :type board: Board
+    :param ships: Dictionary of all ship types and its length,
+        does not contain any coordinates or rotation data
+    :type ships: dict[str, int]
+    :return: A reference to the same instance as the original board passed in
+        the `board` argument
+    :rtype: Board
+    """    
     row = 0
     for ship_name in ships:
         ship_length = ships[ship_name]
@@ -17,6 +28,21 @@ def simple_placement_algorithm(board: Board, ships: dict[str, int]) -> Board:
 
 
 def random_placement_algorithm(board: Board, ships: dict[str, int], max_attempts: int = 100) -> Board:
+    """Places ships in random coordinates and rotations using brute-force
+
+    :param board: Board to modify
+    :type board: Board
+    :param ships: Dictionary of all ship types and its length,
+        does not contain any coordinates or rotation data
+    :type ships: dict[str, int]
+    :param max_attempts: Maximum attempts to brute-force,
+        defaults to 100
+    :type max_attempts: int, optional
+    :raises MaxAttemptsReached: Gives up when `max_attempts` is reached
+    :return: A reference to the same instance as the original board passed in
+        the `board` argument
+    :rtype: Board
+    """    
     board_size = len(board)
 
     for ship_name in ships:
@@ -49,6 +75,19 @@ def random_placement_algorithm(board: Board, ships: dict[str, int], max_attempts
 
 
 def custom_placement_algorithm(board: Board, ships: dict[str, int], placement: dict[str, list[str]]) -> Board:
+    """Places ship according to a dict with specified coordinates and rotations
+
+    :param board: Board to modify
+    :type board: Board
+    :param ships: Dictionary of all ship types and its length,
+        does not contain any coordinates or rotation data
+    :type ships: dict[str, int]
+    :param placement: Dictionary of ship coordinates and corresponding rotations
+    :type placement: dict[str, list[str]]
+    :return: A reference to the same instance as the original board passed in
+        the `board` argument
+    :rtype: Board
+    """    
     for ship_name in ships:
         ship_length = ships[ship_name]
 
