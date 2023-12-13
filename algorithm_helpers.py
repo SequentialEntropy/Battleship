@@ -96,7 +96,7 @@ def fit_ship(board: Board, x: int, y: int, rotation: str, ship_length: int, ship
         existing ship placed there
     :return: Success or fail
     :rtype: bool
-    """    
+    """
     board_size = len(board)
 
     match rotation:

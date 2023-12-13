@@ -16,7 +16,7 @@ def simple_placement_algorithm(board: Board, ships: dict[str, int]) -> Board:
     :return: A reference to the same instance as the original board passed in
         the `board` argument
     :rtype: Board
-    """    
+    """
     row = 0
     for ship_name in ships:
         ship_length = ships[ship_name]
@@ -42,7 +42,7 @@ def random_placement_algorithm(board: Board, ships: dict[str, int], max_attempts
     :return: A reference to the same instance as the original board passed in
         the `board` argument
     :rtype: Board
-    """    
+    """
     board_size = len(board)
 
     for ship_name in ships:
@@ -88,7 +88,7 @@ def custom_placement_algorithm(board: Board, ships: dict[str, int], placement: d
     :return: A reference to the same instance as the original board passed in
         the `board` argument
     :rtype: Board
-    """    
+    """
     for ship_name in ships:
         ship_length = ships[ship_name]
 

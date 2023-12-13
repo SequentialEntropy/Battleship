@@ -45,7 +45,7 @@ def dict_from_json_file(filename: str) -> dict:
     :type filename: str
     :return: Dictionary derived from parsed JSON
     :rtype: dict
-    """    
+    """
     with open(filename, "r", encoding="utf-8") as file:
         return json.loads(file.read())
 
@@ -71,7 +71,7 @@ def place_battleships(board: Board, ships: dict[str, int], algorithm: str = "sim
     :return: A reference to the same instance as the original board passed in
         the `board` argument
     :rtype: Board
-    """    
+    """
     match algorithm:
         case "simple":
             return simple_placement_algorithm(board, ships)
