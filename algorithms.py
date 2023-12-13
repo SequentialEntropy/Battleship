@@ -2,7 +2,10 @@ import random
 
 from algorithm_helpers import MaxAttemptsReached, ShipClashError, fit_ship
 
-def simple_placement_algorithm(board, ships):
+# Define type aliases
+Board = list[list[str | None]]
+
+def simple_placement_algorithm(board: Board, ships: dict[str, int]) -> Board:
     row = 0
     for ship_name in ships:
         ship_length = ships[ship_name]
@@ -13,7 +16,7 @@ def simple_placement_algorithm(board, ships):
 
 
 
-def random_placement_algorithm(board, ships, max_attempts=100):
+def random_placement_algorithm(board: Board, ships: dict[str, int], max_attempts: int = 100) -> Board:
     board_size = len(board)
 
     for ship_name in ships:
@@ -45,7 +48,7 @@ def random_placement_algorithm(board, ships, max_attempts=100):
 
 
 
-def custom_placement_algorithm(board, ships, placement):
+def custom_placement_algorithm(board: Board, ships: dict[str, int], placement: dict[str, list[str]]) -> Board:
     for ship_name in ships:
         ship_length = ships[ship_name]
 
