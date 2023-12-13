@@ -1,19 +1,23 @@
 import components
 
-def attack(coordinates, board, battleships):
-    if board[coordinates[1]][coordinates[0]] is None: # Miss
+# Define type aliases
+Board = list[list[str | None]]
+
+def attack(coordinates: tuple[int, int], board: Board, battleships: dict[str, int]) -> bool:
+
+    ship_name = board[coordinates[1]][coordinates[0]]
+
+    if ship_name is None: # Miss
         return False
     
     # Hit
-    ship_name = board[coordinates[1]][coordinates[0]]
-
     board[coordinates[1]][coordinates[0]] = None
 
     battleships[ship_name] -= 1
 
     return True
 
-def cli_coordinates_input(board_size=10):
+def cli_coordinates_input(board_size: int = 10) -> tuple[int, int]:
     
     while True:
         val = input("Attack x-coordinate: ")
@@ -43,7 +47,7 @@ def cli_coordinates_input(board_size=10):
 
     return (x, y)
 
-def print_board(board, show_acronym=True):
+def print_board(board: Board, show_acronym: bool = True) -> None:
     for row in board:
         for cell in row:
             if cell is None:
@@ -52,7 +56,7 @@ def print_board(board, show_acronym=True):
                 print(cell[:2] if show_acronym else "##", end=" ")
         print()
 
-def simple_game_loop():
+def simple_game_loop() -> None:
     print("Welcome to Battleship")
 
     board = components.initialise_board()
