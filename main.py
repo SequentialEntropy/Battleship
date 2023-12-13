@@ -11,11 +11,11 @@ board_size = 10
 @app.route("/placement", methods=["GET", "POST"])
 def placement_interface() -> str | Response:
     match request.method:
+
         case "GET":
             return render_template("placement.html", ships=ships, board_size=board_size)
     
         case "POST":
-        
             placement = request.get_json()
 
             players["Player"] = {
