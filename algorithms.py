@@ -82,7 +82,8 @@ def custom_placement_algorithm(board: Board, ships: dict[str, int], placement: d
     :param ships: Dictionary of all ship types and its length,
         does not contain any coordinates or rotation data
     :type ships: dict[str, int]
-    :param placement: Dictionary of ship coordinates and corresponding rotations
+    :param placement: Dictionary of ship coordinates
+        and corresponding rotations
     :type placement: dict[str, list[str]]
     :return: A reference to the same instance as the original board passed in
         the `board` argument
