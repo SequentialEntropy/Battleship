@@ -61,9 +61,9 @@ def place_battleships(board: Board, ships: dict[str, int], algorithm: str = "sim
     :param algorithm: Type of placement algorithm to use,
         defaults to "simple"
     :type algorithm: str, optional
-    :param placement: Dictionary of ship coordinates and corresponding rotation,
-        only used for algorithms that benefit from user-specified configurations,
-        such as `custom_placement_algorithm`,
+    :param placement: Dictionary of ship coordinates and corresponding
+        rotations, only used for algorithms that benefit from user-specified
+        configurations, such as `custom_placement_algorithm`,
         defaults to dict_from_json_file("placement.json")
     :type placement: dict[str, list[str]], optional
     :raises ValueError: If the `algorithm` argument does not match any
