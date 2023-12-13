@@ -1,8 +1,13 @@
 import components
 import random
 from game_engine import attack, cli_coordinates_input
+from typing import Any
 
-players = {}
+# Define type aliases
+Board = list[list[str | None]]
+Coordinates = tuple[int, int]
+
+players: dict[str, dict[str, Any]] = {}
 
 grey = "\033[90m"
 red = "\033[91m"
@@ -10,19 +15,19 @@ green = "\033[92m"
 aqua = "\033[96m"
 reset = "\033[0m"
 
-def random_attack_algorithm(board_size):
+def random_attack_algorithm(board_size: int) -> Coordinates:
     x = random.randint(0, board_size - 1)
     y = random.randint(0, board_size - 1)
     return (x, y)
 
-def generate_attack(board_size=10, algorithm="random"):
+def generate_attack(board_size: int = 10, algorithm: str = "random") -> Coordinates:
     match algorithm:
         case "random":
             return random_attack_algorithm(board_size)
         case _:
             raise ValueError(f"The algorithm '{algorithm}' is invalid")
 
-def print_board(board, board_history, show_ships=True):
+def print_board(board: Board, board_history: dict[Coordinates, bool], show_ships: bool = True) -> None:
     board_size = len(board)
 
     print(" ".join([" ", grey] + [" " * (2 - len(str(i))) + str(i) for i in range(board_size)] + [reset]))
@@ -38,7 +43,7 @@ def print_board(board, board_history, show_ships=True):
 
         print()
 
-def ai_opponent_game_loop():
+def ai_opponent_game_loop() -> None:
     print("Welcome to Battleship")
 
     players["Player"] = {

@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template, jsonify, Response
 from mp_game_engine import players, attack, generate_attack
 
 import components
@@ -9,39 +9,42 @@ ships = components.create_battleships()
 board_size = 10
 
 @app.route("/placement", methods=["GET", "POST"])
-def placement_interface():
-    if request.method == "GET":
-        return render_template("placement.html", ships=ships, board_size=board_size)
+def placement_interface() -> str | Response:
+    match request.method:
+        case "GET":
+            return render_template("placement.html", ships=ships, board_size=board_size)
     
-    elif request.method == "POST":
+        case "POST":
         
-        placement = request.get_json()
+            placement = request.get_json()
 
-        players["Player"] = {
-            "board": components.place_battleships(components.initialise_board(board_size), components.create_battleships(), "custom", placement),
-            "battleships": components.create_battleships(),
-            "board_history": {} # Store the coords:result as (int, int):bool to track the AI's attack attempt history
-        }
+            players["Player"] = {
+                "board": components.place_battleships(components.initialise_board(board_size), components.create_battleships(), "custom", placement),
+                "battleships": components.create_battleships(),
+                "board_history": {} # Store the coords:result as (int, int):bool to track the AI's attack attempt history
+            }
 
-        players["AI"] = {
-            "board": components.place_battleships(components.initialise_board(board_size), components.create_battleships(), "random"),
-            "battleships": components.create_battleships(),
-            "board_history": {} # Store the coords:result as (int, int):bool to track the Player's attack attempt history
-        }
+            players["AI"] = {
+                "board": components.place_battleships(components.initialise_board(board_size), components.create_battleships(), "random"),
+                "battleships": components.create_battleships(),
+                "board_history": {} # Store the coords:result as (int, int):bool to track the Player's attack attempt history
+            }
 
-        return jsonify({"message": "Success!"})
+            return jsonify({"message": "Success!"})
+        case _: # Theoretically unreachable clause, but to adhere to return type declaration
+            return "Method Not Allowed"
 
 @app.route("/")
-def root():
+def root() -> str:
     player_board = players["Player"]["board"]
     return render_template("main.html", player_board=player_board)
 
 @app.route("/attack", methods=["GET"])
-def process_attack():
+def process_attack() -> tuple[str, int] | Response:
 
     # Player attacks AI
-    x = int(request.args.get("x"))
-    y = int(request.args.get("y"))
+    x = request.args.get("x", default=-1, type=int)
+    y = request.args.get("y", default=-1, type=int)
     coordinates = (x, y)
 
     if coordinates in players["AI"]["board_history"]:
