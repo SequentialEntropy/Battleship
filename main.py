@@ -36,6 +36,7 @@ def placement_interface() -> str | Response:
             }
 
             return jsonify({"message": "Success!"})
+
         case _: # Theoretically unreachable clause, but to adhere to return type declaration
             return "Method Not Allowed"
 
