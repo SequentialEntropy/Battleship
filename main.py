@@ -10,26 +10,27 @@ board_size = 10
 
 @app.route("/placement", methods=["GET", "POST"])
 def placement_interface():
-    if request.method == "GET":
-        return render_template("placement.html", ships=ships, board_size=board_size)
+    match request.method:
+        case "GET":
+            return render_template("placement.html", ships=ships, board_size=board_size)
     
-    elif request.method == "POST":
+        case "POST":
         
-        placement = request.get_json()
+            placement = request.get_json()
 
-        players["Player"] = {
-            "board": components.place_battleships(components.initialise_board(board_size), components.create_battleships(), "custom", placement),
-            "battleships": components.create_battleships(),
-            "board_history": {} # Store the coords:result as (int, int):bool to track the AI's attack attempt history
-        }
+            players["Player"] = {
+                "board": components.place_battleships(components.initialise_board(board_size), components.create_battleships(), "custom", placement),
+                "battleships": components.create_battleships(),
+                "board_history": {} # Store the coords:result as (int, int):bool to track the AI's attack attempt history
+            }
 
-        players["AI"] = {
-            "board": components.place_battleships(components.initialise_board(board_size), components.create_battleships(), "random"),
-            "battleships": components.create_battleships(),
-            "board_history": {} # Store the coords:result as (int, int):bool to track the Player's attack attempt history
-        }
+            players["AI"] = {
+                "board": components.place_battleships(components.initialise_board(board_size), components.create_battleships(), "random"),
+                "battleships": components.create_battleships(),
+                "board_history": {} # Store the coords:result as (int, int):bool to track the Player's attack attempt history
+            }
 
-        return jsonify({"message": "Success!"})
+            return jsonify({"message": "Success!"})
 
 @app.route("/")
 def root():
