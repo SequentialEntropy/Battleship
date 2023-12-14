@@ -13,7 +13,7 @@ def placement_interface() -> str | Response:
     :rtype: str | Response
     """
     ships = components.create_battleships()
-    board_size = 6
+    board_size = 10
 
     match request.method:
 
