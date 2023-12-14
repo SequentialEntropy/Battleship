@@ -54,6 +54,10 @@ def root() -> str:
 def process_attack() -> tuple[str, int] | Response:
     """Process attack with user-specified coordinates, generate AI attack
 
+    Required HTTP arguments:
+        x: a positive integer smaller than board_size
+        y: a positive integer smaller than board_size
+
     :return: JSON containing hit or miss `bool` and AI attack coordinates,
         returns a message and an HTTP error code when validation fails
     :rtype: tuple[str, int] | Response
