@@ -15,7 +15,8 @@ green = "\033[92m"
 aqua = "\033[96m"
 reset = "\033[0m"
 
-def random_attack_algorithm(board_size: int) -> Coordinates:
+def random_attack_algorithm(board: int) -> Coordinates:
+    # TODO rewrite docstring
     """Generates random x and y coordinates within range of given `board_size`
 
     :param board_size: Range for random number generator
@@ -23,11 +24,13 @@ def random_attack_algorithm(board_size: int) -> Coordinates:
     :return: Tuple of random `int` pair representing x and y coordinates
     :rtype: Coordinates
     """
+    board_size = len(board)
     x = random.randint(0, board_size - 1)
     y = random.randint(0, board_size - 1)
     return (x, y)
 
-def generate_attack(board_size: int = 10, algorithm: str = "random") -> Coordinates:
+def generate_attack(board: Board = [[None]], algorithm: str = "random", memory: dict = None) -> Coordinates:
+    # TODO rewrite docstring
     """Generates AI attack coordinates based on `algorithm`
 
     :param board_size: Size of board,
@@ -42,7 +45,7 @@ def generate_attack(board_size: int = 10, algorithm: str = "random") -> Coordina
     """
     match algorithm:
         case "random":
-            return random_attack_algorithm(board_size)
+            return random_attack_algorithm(board)
         case _:
             raise ValueError(f"The algorithm '{algorithm}' is invalid")
 
@@ -121,7 +124,7 @@ def ai_opponent_game_loop() -> None:
 
         # AI attacks Player
         while True:
-            coordinates = generate_attack()
+            coordinates = generate_attack(players["Player"]["board"])
             if coordinates not in players["Player"]["board_history"]:
                 break
 

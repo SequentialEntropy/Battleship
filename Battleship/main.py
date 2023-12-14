@@ -90,7 +90,7 @@ def process_attack() -> tuple[str, int] | Response:
 
     # AI attacks Player
     while True:
-        coordinates = generate_attack(len(players["Player"]["board"]))
+        coordinates = generate_attack(players["Player"]["board"])
         if coordinates not in players["Player"]["board_history"]:
             break
 
