@@ -80,6 +80,23 @@ def ai_opponent_game_loop() -> None:
 
     print("Welcome to Battleship")
 
+    print("-" * 32)
+
+    algorithms = ["random"]
+
+    while True:
+        print("Choose an AI algorithm:")
+        for i in range(len(algorithms)):
+            print(f"{i} - {algorithms[i]}")
+        try:
+            choice = int(input("Choice: "))
+            algorithm = algorithms[choice]
+            break
+        except ValueError:
+            continue
+        except IndexError:
+            continue
+
     players["Player"] = {
         "board": components.place_battleships(components.initialise_board(), components.create_battleships(), "custom"),
         "battleships": components.create_battleships(),
@@ -89,7 +106,8 @@ def ai_opponent_game_loop() -> None:
     players["AI"] = {
         "board": components.place_battleships(components.initialise_board(), components.create_battleships(), "random"),
         "battleships": components.create_battleships(),
-        "board_history": {} # Store the coords:result as (int, int):bool to track the Player's attack attempt history
+        "board_history": {}, # Store the coords:result as (int, int):bool to track the Player's attack attempt history
+        "memory": {}
     }
 
     print("-" * 32)
@@ -124,7 +142,7 @@ def ai_opponent_game_loop() -> None:
 
         # AI attacks Player
         while True:
-            coordinates = generate_attack(players["Player"]["board"])
+            coordinates = generate_attack(players["Player"]["board"], algorithm=algorithm, memory=players["AI"]["memory"])
             if coordinates not in players["Player"]["board_history"]:
                 break
 
