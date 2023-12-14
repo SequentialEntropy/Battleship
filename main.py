@@ -9,6 +9,16 @@ app = Flask(__name__)
 def placement_interface() -> str | Response:
     """Placement interface, initialises game with user-specified player board
 
+    Required POST request json format:
+    {
+        "Ship_Name": [
+            "0", // x-coordinate
+            "0", // y-coordinate
+            "h"  // orientation, must be "h" or "v"
+        ]
+        ... // repeat for all ships, an example can be found in placement.json
+    }
+
     :return: HTML template `str` on GET, JSON success message on POST
     :rtype: str | Response
     """
