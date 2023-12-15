@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tests package &mdash; Battleship 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Battleship
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">tests package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-tests.test_functionality">tests.test_functionality module</a><ul>
+<li><a class="reference internal" href="#tests.test_functionality.test_initialise_board_return_size"><code class="docutils literal notranslate"><span class="pre">test_initialise_board_return_size()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-tests.test_helper_functions">tests.test_helper_functions module</a><ul>
+<li><a class="reference internal" href="#tests.test_helper_functions.TestReport"><code class="docutils literal notranslate"><span class="pre">TestReport</span></code></a><ul>
+<li><a class="reference internal" href="#tests.test_helper_functions.TestReport.add_message"><code class="docutils literal notranslate"><span class="pre">TestReport.add_message()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tests.test_helper_functions.is_dict_of_type"><code class="docutils literal notranslate"><span class="pre">is_dict_of_type()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_helper_functions.is_list_of_lists"><code class="docutils literal notranslate"><span class="pre">is_list_of_lists()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_helper_functions.tuple_of_type"><code class="docutils literal notranslate"><span class="pre">tuple_of_type()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-tests.test_students">tests.test_students module</a><ul>
+<li><a class="reference internal" href="#tests.test_students.test_ai_opponent_game_loop_exists"><code class="docutils literal notranslate"><span class="pre">test_ai_opponent_game_loop_exists()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_students.test_attack_arguments"><code class="docutils literal notranslate"><span class="pre">test_attack_arguments()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_students.test_attack_exists"><code class="docutils literal notranslate"><span class="pre">test_attack_exists()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_students.test_battleships_txt_exists"><code class="docutils literal notranslate"><span class="pre">test_battleships_txt_exists()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_students.test_cli_coordinates_input_exists"><code class="docutils literal notranslate"><span class="pre">test_cli_coordinates_input_exists()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_students.test_components_exists"><code class="docutils literal notranslate"><span class="pre">test_components_exists()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_students.test_create_battleships_argument"><code class="docutils literal notranslate"><span class="pre">test_create_battleships_argument()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_students.test_create_battleships_exists"><code class="docutils literal notranslate"><span class="pre">test_create_battleships_exists()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_students.test_create_battleships_return_type"><code class="docutils literal notranslate"><span class="pre">test_create_battleships_return_type()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_students.test_game_engine_exists"><code class="docutils literal notranslate"><span class="pre">test_game_engine_exists()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_students.test_generate_attack_exists"><code class="docutils literal notranslate"><span class="pre">test_generate_attack_exists()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_students.test_generate_attack_return_type"><code class="docutils literal notranslate"><span class="pre">test_generate_attack_return_type()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_students.test_initialise_board_argument"><code class="docutils literal notranslate"><span class="pre">test_initialise_board_argument()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_students.test_initialise_board_exists"><code class="docutils literal notranslate"><span class="pre">test_initialise_board_exists()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_students.test_initialise_board_return_type"><code class="docutils literal notranslate"><span class="pre">test_initialise_board_return_type()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_students.test_main_module_exists"><code class="docutils literal notranslate"><span class="pre">test_main_module_exists()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_students.test_mp_game_engine_exists"><code class="docutils literal notranslate"><span class="pre">test_mp_game_engine_exists()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_students.test_place_battleships_arguments"><code class="docutils literal notranslate"><span class="pre">test_place_battleships_arguments()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_students.test_place_battleships_exists"><code class="docutils literal notranslate"><span class="pre">test_place_battleships_exists()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_students.test_place_battleships_return_type"><code class="docutils literal notranslate"><span class="pre">test_place_battleships_return_type()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_students.test_placement_interface_exists"><code class="docutils literal notranslate"><span class="pre">test_placement_interface_exists()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_students.test_root_exists"><code class="docutils literal notranslate"><span class="pre">test_root_exists()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_students.test_simple_game_loop_exists"><code class="docutils literal notranslate"><span class="pre">test_simple_game_loop_exists()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-tests">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Battleship</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">tests package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/tests.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tests-package">
+<h1>tests package<a class="headerlink" href="#tests-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-tests.test_functionality">
+<span id="tests-test-functionality-module"></span><h2>tests.test_functionality module<a class="headerlink" href="#module-tests.test_functionality" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_functionality.test_initialise_board_return_size">
+<span class="sig-prename descclassname"><span class="pre">tests.test_functionality.</span></span><span class="sig-name descname"><span class="pre">test_initialise_board_return_size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_functionality.html#test_initialise_board_return_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_functionality.test_initialise_board_return_size" title="Link to this definition"></a></dt>
+<dd><p>Test if the initialise_board function returns a list of the correct size.</p>
+</dd></dl>
+
+</section>
+<section id="module-tests.test_helper_functions">
+<span id="tests-test-helper-functions-module"></span><h2>tests.test_helper_functions module<a class="headerlink" href="#module-tests.test_helper_functions" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_helper_functions.TestReport">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tests.test_helper_functions.</span></span><span class="sig-name descname"><span class="pre">TestReport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_helper_functions.html#TestReport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_helper_functions.TestReport" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_helper_functions.TestReport.add_message">
+<span class="sig-name descname"><span class="pre">add_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_helper_functions.html#TestReport.add_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_helper_functions.TestReport.add_message" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_helper_functions.is_dict_of_type">
+<span class="sig-prename descclassname"><span class="pre">tests.test_helper_functions.</span></span><span class="sig-name descname"><span class="pre">is_dict_of_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_helper_functions.html#is_dict_of_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_helper_functions.is_dict_of_type" title="Link to this definition"></a></dt>
+<dd><p>Used to test if an object is a dictionary of a certain type</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_helper_functions.is_list_of_lists">
+<span class="sig-prename descclassname"><span class="pre">tests.test_helper_functions.</span></span><span class="sig-name descname"><span class="pre">is_list_of_lists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtype</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_helper_functions.html#is_list_of_lists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_helper_functions.is_list_of_lists" title="Link to this definition"></a></dt>
+<dd><p>Used to test if an object is a list of lists of a certain type</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_helper_functions.tuple_of_type">
+<span class="sig-prename descclassname"><span class="pre">tests.test_helper_functions.</span></span><span class="sig-name descname"><span class="pre">tuple_of_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_helper_functions.html#tuple_of_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_helper_functions.tuple_of_type" title="Link to this definition"></a></dt>
+<dd><p>Used to test if an object is a tuple of a certain type</p>
+</dd></dl>
+
+</section>
+<section id="module-tests.test_students">
+<span id="tests-test-students-module"></span><h2>tests.test_students module<a class="headerlink" href="#module-tests.test_students" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_students.test_ai_opponent_game_loop_exists">
+<span class="sig-prename descclassname"><span class="pre">tests.test_students.</span></span><span class="sig-name descname"><span class="pre">test_ai_opponent_game_loop_exists</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_students.html#test_ai_opponent_game_loop_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_students.test_ai_opponent_game_loop_exists" title="Link to this definition"></a></dt>
+<dd><p>Test if the ai_opponent_game_loop function exists.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_students.test_attack_arguments">
+<span class="sig-prename descclassname"><span class="pre">tests.test_students.</span></span><span class="sig-name descname"><span class="pre">test_attack_arguments</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_students.html#test_attack_arguments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_students.test_attack_arguments" title="Link to this definition"></a></dt>
+<dd><p>Test if the attack function accepts a tuple, a list, and a dictionary argument.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_students.test_attack_exists">
+<span class="sig-prename descclassname"><span class="pre">tests.test_students.</span></span><span class="sig-name descname"><span class="pre">test_attack_exists</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_students.html#test_attack_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_students.test_attack_exists" title="Link to this definition"></a></dt>
+<dd><p>Test if the attack function exists.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_students.test_battleships_txt_exists">
+<span class="sig-prename descclassname"><span class="pre">tests.test_students.</span></span><span class="sig-name descname"><span class="pre">test_battleships_txt_exists</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_students.html#test_battleships_txt_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_students.test_battleships_txt_exists" title="Link to this definition"></a></dt>
+<dd><p>Test if the battleships.txt file exists.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_students.test_cli_coordinates_input_exists">
+<span class="sig-prename descclassname"><span class="pre">tests.test_students.</span></span><span class="sig-name descname"><span class="pre">test_cli_coordinates_input_exists</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_students.html#test_cli_coordinates_input_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_students.test_cli_coordinates_input_exists" title="Link to this definition"></a></dt>
+<dd><p>Test if the cli_coordinates_input function exists.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_students.test_components_exists">
+<span class="sig-prename descclassname"><span class="pre">tests.test_students.</span></span><span class="sig-name descname"><span class="pre">test_components_exists</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_students.html#test_components_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_students.test_components_exists" title="Link to this definition"></a></dt>
+<dd><p>Test if the components module exists.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_students.test_create_battleships_argument">
+<span class="sig-prename descclassname"><span class="pre">tests.test_students.</span></span><span class="sig-name descname"><span class="pre">test_create_battleships_argument</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_students.html#test_create_battleships_argument"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_students.test_create_battleships_argument" title="Link to this definition"></a></dt>
+<dd><p>Test if the create_battleships function accepts a string argument.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_students.test_create_battleships_exists">
+<span class="sig-prename descclassname"><span class="pre">tests.test_students.</span></span><span class="sig-name descname"><span class="pre">test_create_battleships_exists</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_students.html#test_create_battleships_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_students.test_create_battleships_exists" title="Link to this definition"></a></dt>
+<dd><p>Test if the create_battleships function exists.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_students.test_create_battleships_return_type">
+<span class="sig-prename descclassname"><span class="pre">tests.test_students.</span></span><span class="sig-name descname"><span class="pre">test_create_battleships_return_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_students.html#test_create_battleships_return_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_students.test_create_battleships_return_type" title="Link to this definition"></a></dt>
+<dd><p>Test if the create_battleships function returns a dictionary.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_students.test_game_engine_exists">
+<span class="sig-prename descclassname"><span class="pre">tests.test_students.</span></span><span class="sig-name descname"><span class="pre">test_game_engine_exists</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_students.html#test_game_engine_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_students.test_game_engine_exists" title="Link to this definition"></a></dt>
+<dd><p>Test if the game_engine module exists.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_students.test_generate_attack_exists">
+<span class="sig-prename descclassname"><span class="pre">tests.test_students.</span></span><span class="sig-name descname"><span class="pre">test_generate_attack_exists</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_students.html#test_generate_attack_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_students.test_generate_attack_exists" title="Link to this definition"></a></dt>
+<dd><p>Test if the generate_attack function exists.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_students.test_generate_attack_return_type">
+<span class="sig-prename descclassname"><span class="pre">tests.test_students.</span></span><span class="sig-name descname"><span class="pre">test_generate_attack_return_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_students.html#test_generate_attack_return_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_students.test_generate_attack_return_type" title="Link to this definition"></a></dt>
+<dd><p>Test if the generate_attack function returns a tuple.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_students.test_initialise_board_argument">
+<span class="sig-prename descclassname"><span class="pre">tests.test_students.</span></span><span class="sig-name descname"><span class="pre">test_initialise_board_argument</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_students.html#test_initialise_board_argument"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_students.test_initialise_board_argument" title="Link to this definition"></a></dt>
+<dd><p>Test if the initialise_board function accepts an integer argument.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_students.test_initialise_board_exists">
+<span class="sig-prename descclassname"><span class="pre">tests.test_students.</span></span><span class="sig-name descname"><span class="pre">test_initialise_board_exists</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_students.html#test_initialise_board_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_students.test_initialise_board_exists" title="Link to this definition"></a></dt>
+<dd><p>Test if the initialise_board function exists.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_students.test_initialise_board_return_type">
+<span class="sig-prename descclassname"><span class="pre">tests.test_students.</span></span><span class="sig-name descname"><span class="pre">test_initialise_board_return_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_students.html#test_initialise_board_return_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_students.test_initialise_board_return_type" title="Link to this definition"></a></dt>
+<dd><p>Test if the initialise_board function returns a list.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_students.test_main_module_exists">
+<span class="sig-prename descclassname"><span class="pre">tests.test_students.</span></span><span class="sig-name descname"><span class="pre">test_main_module_exists</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_students.html#test_main_module_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_students.test_main_module_exists" title="Link to this definition"></a></dt>
+<dd><p>Test if the main module exists.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_students.test_mp_game_engine_exists">
+<span class="sig-prename descclassname"><span class="pre">tests.test_students.</span></span><span class="sig-name descname"><span class="pre">test_mp_game_engine_exists</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_students.html#test_mp_game_engine_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_students.test_mp_game_engine_exists" title="Link to this definition"></a></dt>
+<dd><p>Test if the mp_game_engine module exists.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_students.test_place_battleships_arguments">
+<span class="sig-prename descclassname"><span class="pre">tests.test_students.</span></span><span class="sig-name descname"><span class="pre">test_place_battleships_arguments</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_students.html#test_place_battleships_arguments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_students.test_place_battleships_arguments" title="Link to this definition"></a></dt>
+<dd><p>Test if the place_battleships function accepts a list and a dictionary argument.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_students.test_place_battleships_exists">
+<span class="sig-prename descclassname"><span class="pre">tests.test_students.</span></span><span class="sig-name descname"><span class="pre">test_place_battleships_exists</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_students.html#test_place_battleships_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_students.test_place_battleships_exists" title="Link to this definition"></a></dt>
+<dd><p>Test if the place_battleships function exists.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_students.test_place_battleships_return_type">
+<span class="sig-prename descclassname"><span class="pre">tests.test_students.</span></span><span class="sig-name descname"><span class="pre">test_place_battleships_return_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_students.html#test_place_battleships_return_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_students.test_place_battleships_return_type" title="Link to this definition"></a></dt>
+<dd><p>Test if the place_battleships function returns a list of lists of strings/None values.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_students.test_placement_interface_exists">
+<span class="sig-prename descclassname"><span class="pre">tests.test_students.</span></span><span class="sig-name descname"><span class="pre">test_placement_interface_exists</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_students.html#test_placement_interface_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_students.test_placement_interface_exists" title="Link to this definition"></a></dt>
+<dd><p>Test if the placement_interface function exists.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_students.test_root_exists">
+<span class="sig-prename descclassname"><span class="pre">tests.test_students.</span></span><span class="sig-name descname"><span class="pre">test_root_exists</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_students.html#test_root_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_students.test_root_exists" title="Link to this definition"></a></dt>
+<dd><p>Test if the root function exists.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_students.test_simple_game_loop_exists">
+<span class="sig-prename descclassname"><span class="pre">tests.test_students.</span></span><span class="sig-name descname"><span class="pre">test_simple_game_loop_exists</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_students.html#test_simple_game_loop_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_students.test_simple_game_loop_exists" title="Link to this definition"></a></dt>
+<dd><p>Test if the simple_game_loop function exists.</p>
+</dd></dl>
+
+</section>
+<section id="module-tests">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-tests" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, 123166.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

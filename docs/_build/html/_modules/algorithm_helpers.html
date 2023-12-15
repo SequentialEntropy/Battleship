@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>algorithm_helpers &mdash; Battleship 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Battleship
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Battleship</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">algorithm_helpers</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for algorithm_helpers</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Define type aliases</span>
+<span class="n">Board</span> <span class="o">=</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]]</span>
+
+<div class="viewcode-block" id="ShipClashError">
+<a class="viewcode-back" href="../algorithm_helpers.html#algorithm_helpers.ShipClashError">[docs]</a>
+<span class="k">class</span> <span class="nc">ShipClashError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Custom exception for ship placement attempted in an occupied cell&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">rotation</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ship_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ship_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Ship&quot;</span><span class="p">,</span> <span class="n">obstructing_ship_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Ship&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructs an error message</span>
+
+<span class="sd">        :param x: x-coordinate of target ship</span>
+<span class="sd">        :type x: int</span>
+<span class="sd">        :param y: y-coordinate of target ship</span>
+<span class="sd">        :type y: int</span>
+<span class="sd">        :param rotation: Rotation of target ship</span>
+<span class="sd">        :type rotation: str</span>
+<span class="sd">        :param ship_length: Length of target ship</span>
+<span class="sd">        :type ship_length: int</span>
+<span class="sd">        :param ship_name: Name of target ship,</span>
+<span class="sd">            defaults to &quot;Ship&quot;</span>
+<span class="sd">        :type ship_name: str, optional</span>
+<span class="sd">        :param obstructing_ship_name: Name of ship obstructing target ship,</span>
+<span class="sd">            defaults to &quot;Ship&quot;</span>
+<span class="sd">        :type obstructing_ship_name: str, optional</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ship_name</span><span class="si">}</span><span class="s2"> of length </span><span class="si">{</span><span class="n">ship_length</span><span class="si">}</span><span class="s2"> positioned at (</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">) with rotation &#39;</span><span class="si">{</span><span class="n">rotation</span><span class="si">}</span><span class="s2">&#39; is obstructed by existing </span><span class="si">{</span><span class="n">obstructing_ship_name</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ShipExceedsBoardBoundsError">
+<a class="viewcode-back" href="../algorithm_helpers.html#algorithm_helpers.ShipExceedsBoardBoundsError">[docs]</a>
+<span class="k">class</span> <span class="nc">ShipExceedsBoardBoundsError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Custom exception for when ship would extend outside the board bounds&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">rotation</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ship_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ship_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Ship&quot;</span><span class="p">,</span> <span class="n">board_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructs an error message</span>
+
+<span class="sd">        :param x: x-coordinate of target ship</span>
+<span class="sd">        :type x: int</span>
+<span class="sd">        :param y: y-coordinate of target ship</span>
+<span class="sd">        :type y: int</span>
+<span class="sd">        :param rotation: Rotation of target ship</span>
+<span class="sd">        :type rotation: str</span>
+<span class="sd">        :param ship_length: Length of target ship</span>
+<span class="sd">        :type ship_length: int</span>
+<span class="sd">        :param ship_name: Name of target ship,</span>
+<span class="sd">            defaults to &quot;Ship&quot;</span>
+<span class="sd">        :type ship_name: str, optional</span>
+<span class="sd">        :param board_size: Size of board,</span>
+<span class="sd">            defaults to None</span>
+<span class="sd">        :type board_size: int | None, optional</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">board_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ship_name</span><span class="si">}</span><span class="s2"> of length </span><span class="si">{</span><span class="n">ship_length</span><span class="si">}</span><span class="s2"> positioned at (</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">) with rotation &#39;</span><span class="si">{</span><span class="n">rotation</span><span class="si">}</span><span class="s2">&#39; does not fit the board&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ship_name</span><span class="si">}</span><span class="s2"> of length </span><span class="si">{</span><span class="n">ship_length</span><span class="si">}</span><span class="s2"> positioned at (</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">) with rotation &#39;</span><span class="si">{</span><span class="n">rotation</span><span class="si">}</span><span class="s2">&#39; does not fit the board of size </span><span class="si">{</span><span class="n">board_size</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MaxAttemptsReached">
+<a class="viewcode-back" href="../algorithm_helpers.html#algorithm_helpers.MaxAttemptsReached">[docs]</a>
+<span class="k">class</span> <span class="nc">MaxAttemptsReached</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Custom exception for when ship placement attempts exceed a threshold&quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attempts</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructs an error message</span>
+
+<span class="sd">        :param attempts: Number of attempts made - same as max attempts</span>
+<span class="sd">        :type attempts: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Max attempts (</span><span class="si">{</span><span class="n">attempts</span><span class="si">}</span><span class="s2">) reached&quot;</span>
+        <span class="p">)</span></div>
+
+    
+
+
+<div class="viewcode-block" id="fit_ship">
+<a class="viewcode-back" href="../algorithm_helpers.html#algorithm_helpers.fit_ship">[docs]</a>
+<span class="k">def</span> <span class="nf">fit_ship</span><span class="p">(</span><span class="n">board</span><span class="p">:</span> <span class="n">Board</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">rotation</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ship_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ship_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Modifies board in-place updating the coordinates the ship would occupy</span>
+
+<span class="sd">    Changes the value stored in each coordinate in the board</span>
+<span class="sd">    from `None` to the `ship_name`</span>
+
+<span class="sd">    :param board: Board to modify</span>
+<span class="sd">    :type board: Board</span>
+<span class="sd">    :param x: x-coordinate of target ship</span>
+<span class="sd">    :type x: int</span>
+<span class="sd">    :param y: y-coordinate of target ship</span>
+<span class="sd">    :type y: int</span>
+<span class="sd">    :param rotation: Rotation of target ship</span>
+<span class="sd">    :type rotation: str</span>
+<span class="sd">    :param ship_length: Length of target ship</span>
+<span class="sd">    :type ship_length: int</span>
+<span class="sd">    :param ship_name: Name of target ship</span>
+<span class="sd">    :type ship_name: str</span>
+<span class="sd">    :raises ShipExceedsBoardBoundsError: When ship would overflow board bounds</span>
+<span class="sd">    :raises ValueError: When the rotation is neither &#39;h&#39; nor &#39;v&#39;</span>
+<span class="sd">    :raises ShipClashError: When any space the ship would occupy already has an</span>
+<span class="sd">        existing ship placed there</span>
+<span class="sd">    :return: Success or fail</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">board_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">board</span><span class="p">)</span>
+
+    <span class="k">match</span> <span class="n">rotation</span><span class="p">:</span>
+        <span class="k">case</span> <span class="s2">&quot;h&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">x</span> <span class="o">+</span> <span class="n">ship_length</span> <span class="o">&gt;</span> <span class="n">board_size</span><span class="p">:</span> <span class="c1"># If ship pokes out the right side of the board, raise an error</span>
+                <span class="k">raise</span> <span class="n">ShipExceedsBoardBoundsError</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rotation</span><span class="p">,</span> <span class="n">ship_length</span><span class="p">,</span> <span class="n">ship_name</span><span class="p">,</span> <span class="n">board_size</span><span class="p">)</span>
+
+            <span class="n">ship_coords</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">ship_length</span><span class="p">)]</span>
+
+        <span class="k">case</span> <span class="s2">&quot;v&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">y</span> <span class="o">+</span> <span class="n">ship_length</span> <span class="o">&gt;</span> <span class="n">board_size</span><span class="p">:</span> <span class="c1"># If ship pokes out the bottom side of the board, raise an error</span>
+                <span class="k">raise</span> <span class="n">ShipExceedsBoardBoundsError</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rotation</span><span class="p">,</span> <span class="n">ship_length</span><span class="p">,</span> <span class="n">ship_name</span><span class="p">,</span> <span class="n">board_size</span><span class="p">)</span>
+
+            <span class="n">ship_coords</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">ship_length</span><span class="p">)]</span>
+
+        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The rotation &#39;</span><span class="si">{</span><span class="n">rotation</span><span class="si">}</span><span class="s2">&#39; is invalid, it must be either &#39;h&#39; or &#39;v&#39;&quot;</span><span class="p">)</span>
+
+<span class="w">    </span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Having two loops is necessary to prevent the board from having an invalid state</span>
+<span class="sd">    by making sure the boat is either fully placed or rejected and not in-between</span>
+
+<span class="sd">    As the board is modified *in-place* and *not on a copy*, we have to make sure</span>
+<span class="sd">    the function doesn&#39;t exit midway through the loop because of a clash being detected</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># First loop is a preliminary check to determine if all cells in a given ship length are occupied by another ship</span>
+    <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">ship_coords</span><span class="p">:</span>
+        <span class="c1"># Check if coordinates in the board is occupied (clash detection)</span>
+        <span class="n">obstructing_ship_name</span> <span class="o">=</span> <span class="n">board</span><span class="p">[</span><span class="n">coord</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="n">coord</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="n">obstructing_ship_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ShipClashError</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rotation</span><span class="p">,</span> <span class="n">ship_length</span><span class="p">,</span> <span class="n">ship_name</span><span class="p">,</span> <span class="n">obstructing_ship_name</span><span class="p">)</span>
+
+    <span class="c1"># Second loop is in charge of actually placing the ship (modifying board)</span>
+    <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">ship_coords</span><span class="p">:</span>
+        <span class="n">board</span><span class="p">[</span><span class="n">coord</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="n">coord</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ship_name</span>
+    
+    <span class="c1"># Ship is fitted onto the board successfully</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, 123166.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

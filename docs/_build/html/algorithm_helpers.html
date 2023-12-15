@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>algorithm_helpers module &mdash; Battleship 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Battleship
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">algorithm_helpers module</a><ul>
+<li><a class="reference internal" href="#algorithm_helpers.MaxAttemptsReached"><code class="docutils literal notranslate"><span class="pre">MaxAttemptsReached</span></code></a></li>
+<li><a class="reference internal" href="#algorithm_helpers.ShipClashError"><code class="docutils literal notranslate"><span class="pre">ShipClashError</span></code></a></li>
+<li><a class="reference internal" href="#algorithm_helpers.ShipExceedsBoardBoundsError"><code class="docutils literal notranslate"><span class="pre">ShipExceedsBoardBoundsError</span></code></a></li>
+<li><a class="reference internal" href="#algorithm_helpers.fit_ship"><code class="docutils literal notranslate"><span class="pre">fit_ship()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Battleship</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">algorithm_helpers module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/algorithm_helpers.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-algorithm_helpers">
+<span id="algorithm-helpers-module"></span><h1>algorithm_helpers module<a class="headerlink" href="#module-algorithm_helpers" title="Link to this heading"></a></h1>
+<dl class="py exception">
+<dt class="sig sig-object py" id="algorithm_helpers.MaxAttemptsReached">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">algorithm_helpers.</span></span><span class="sig-name descname"><span class="pre">MaxAttemptsReached</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attempts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/algorithm_helpers.html#MaxAttemptsReached"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#algorithm_helpers.MaxAttemptsReached" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Custom exception for when ship placement attempts exceed a threshold</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="algorithm_helpers.ShipClashError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">algorithm_helpers.</span></span><span class="sig-name descname"><span class="pre">ShipClashError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ship_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ship_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Ship'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obstructing_ship_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Ship'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/algorithm_helpers.html#ShipClashError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#algorithm_helpers.ShipClashError" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Custom exception for ship placement attempted in an occupied cell</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="algorithm_helpers.ShipExceedsBoardBoundsError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">algorithm_helpers.</span></span><span class="sig-name descname"><span class="pre">ShipExceedsBoardBoundsError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ship_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ship_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Ship'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">board_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/algorithm_helpers.html#ShipExceedsBoardBoundsError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#algorithm_helpers.ShipExceedsBoardBoundsError" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Custom exception for when ship would extend outside the board bounds</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="algorithm_helpers.fit_ship">
+<span class="sig-prename descclassname"><span class="pre">algorithm_helpers.</span></span><span class="sig-name descname"><span class="pre">fit_ship</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ship_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ship_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/algorithm_helpers.html#fit_ship"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#algorithm_helpers.fit_ship" title="Link to this definition"></a></dt>
+<dd><p>Modifies board in-place updating the coordinates the ship would occupy</p>
+<p>Changes the value stored in each coordinate in the board
+from <cite>None</cite> to the <cite>ship_name</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>board</strong> (<em>Board</em>) – Board to modify</p></li>
+<li><p><strong>x</strong> (<em>int</em>) – x-coordinate of target ship</p></li>
+<li><p><strong>y</strong> (<em>int</em>) – y-coordinate of target ship</p></li>
+<li><p><strong>rotation</strong> (<em>str</em>) – Rotation of target ship</p></li>
+<li><p><strong>ship_length</strong> (<em>int</em>) – Length of target ship</p></li>
+<li><p><strong>ship_name</strong> (<em>str</em>) – Name of target ship</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#algorithm_helpers.ShipExceedsBoardBoundsError" title="algorithm_helpers.ShipExceedsBoardBoundsError"><strong>ShipExceedsBoardBoundsError</strong></a> – When ship would overflow board bounds</p></li>
+<li><p><strong>ValueError</strong> – When the rotation is neither ‘h’ nor ‘v’</p></li>
+<li><p><a class="reference internal" href="#algorithm_helpers.ShipClashError" title="algorithm_helpers.ShipClashError"><strong>ShipClashError</strong></a> – When any space the ship would occupy already has an
+existing ship placed there</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Success or fail</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, 123166.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

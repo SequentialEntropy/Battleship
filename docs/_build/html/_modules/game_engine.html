@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>game_engine &mdash; Battleship 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Battleship
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Battleship</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">game_engine</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for game_engine</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">components</span>
+
+<span class="c1"># Define type aliases</span>
+<span class="n">Board</span> <span class="o">=</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]]</span>
+<span class="n">Coordinates</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
+
+<div class="viewcode-block" id="attack">
+<a class="viewcode-back" href="../game_engine.html#game_engine.attack">[docs]</a>
+<span class="k">def</span> <span class="nf">attack</span><span class="p">(</span><span class="n">coordinates</span><span class="p">:</span> <span class="n">Coordinates</span><span class="p">,</span> <span class="n">board</span><span class="p">:</span> <span class="n">Board</span><span class="p">,</span> <span class="n">battleships</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns if attack hits a ship and updates the board and ship counters</span>
+
+<span class="sd">    If the target coordinate is already `None`, the attack is a miss.</span>
+<span class="sd">    If the attack hits, it reverts the target coordinate to `None`,</span>
+<span class="sd">    then, the corresponding ship counter in the dictionary will decrement by 1.</span>
+
+<span class="sd">    :param coordinates: Coordinates of the attack</span>
+<span class="sd">    :type coordinates: Coordinates</span>
+<span class="sd">    :param board: Board to target and modify</span>
+<span class="sd">    :type board: Board</span>
+<span class="sd">    :param battleships: Dictionary of ships and its corresponding lengths</span>
+<span class="sd">    :type battleships: dict[str, int]</span>
+<span class="sd">    :return: Success or failure of the attack</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ship_name</span> <span class="o">=</span> <span class="n">board</span><span class="p">[</span><span class="n">coordinates</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="n">coordinates</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+    <span class="k">if</span> <span class="n">ship_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="c1"># Miss</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    
+    <span class="c1"># Hit</span>
+    <span class="n">board</span><span class="p">[</span><span class="n">coordinates</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="n">coordinates</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">battleships</span><span class="p">[</span><span class="n">ship_name</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="cli_coordinates_input">
+<a class="viewcode-back" href="../game_engine.html#game_engine.cli_coordinates_input">[docs]</a>
+<span class="k">def</span> <span class="nf">cli_coordinates_input</span><span class="p">(</span><span class="n">board_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Coordinates</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Prompts the user for a valid coordinate input through the command-line</span>
+
+<span class="sd">    :param board_size: Size of board for range validation check,</span>
+<span class="sd">        defaults to 10</span>
+<span class="sd">    :type board_size: int, optional</span>
+<span class="sd">    :return: Tuple pair of `int` representing x and y coordinates</span>
+<span class="sd">    :rtype: Coordinates</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Attack x-coordinate: &quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">board_size</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2"> does not fit within 0 to </span><span class="si">{</span><span class="n">board_size</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="k">break</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2"> is not a number&quot;</span><span class="p">)</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Attack y-coordinate: &quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">y</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">board_size</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2"> does not fit within 0 to </span><span class="si">{</span><span class="n">board_size</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="k">break</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2"> is not a number&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="print_board">
+<a class="viewcode-back" href="../game_engine.html#game_engine.print_board">[docs]</a>
+<span class="k">def</span> <span class="nf">print_board</span><span class="p">(</span><span class="n">board</span><span class="p">:</span> <span class="n">Board</span><span class="p">,</span> <span class="n">show_acronym</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Prints an ASCII representation of the board&#39;s state</span>
+
+<span class="sd">    If `show_acronym` is `True`, each cell with a ship will be represented</span>
+<span class="sd">    with the first two characters of the ship name. Mainly for debugging.</span>
+<span class="sd">    If `show_acronym` is `False`, each cell with a ship will be represented</span>
+<span class="sd">    as `##`</span>
+<span class="sd">    Any unoccupied cells will be represented as `::`</span>
+
+<span class="sd">    :param board: Board to display</span>
+<span class="sd">    :type board: Board</span>
+<span class="sd">    :param show_acronym: Represent occupied cells with 2 character</span>
+<span class="sd">        ship name acronyms,</span>
+<span class="sd">        defaults to True</span>
+<span class="sd">    :type show_acronym: bool, optional</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">board</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">cell</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;::&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">cell</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="k">if</span> <span class="n">show_acronym</span> <span class="k">else</span> <span class="s2">&quot;##&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="simple_game_loop">
+<a class="viewcode-back" href="../game_engine.html#game_engine.simple_game_loop">[docs]</a>
+<span class="k">def</span> <span class="nf">simple_game_loop</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Simple game loop with one player, one board and ships always revealed&quot;&quot;&quot;</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Welcome to Battleship&quot;</span><span class="p">)</span>
+
+    <span class="n">board</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">initialise_board</span><span class="p">()</span>
+    <span class="n">ships</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">create_battleships</span><span class="p">()</span>
+
+    <span class="n">components</span><span class="o">.</span><span class="n">place_battleships</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">ships</span><span class="p">,</span> <span class="s2">&quot;custom&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">29</span><span class="p">)</span>
+
+    <span class="k">while</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">ship_length</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">ship_length</span> <span class="ow">in</span> <span class="n">ships</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
+
+        <span class="n">print_board</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">show_acronym</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">29</span><span class="p">)</span>
+
+        <span class="n">hit_or_miss</span> <span class="o">=</span> <span class="n">attack</span><span class="p">(</span><span class="n">cli_coordinates_input</span><span class="p">(),</span> <span class="n">board</span><span class="p">,</span> <span class="n">ships</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">29</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hit&quot;</span> <span class="k">if</span> <span class="n">hit_or_miss</span> <span class="k">else</span> <span class="s2">&quot;Miss&quot;</span><span class="p">)</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">29</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Game Over&quot;</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">simple_game_loop</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, 123166.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

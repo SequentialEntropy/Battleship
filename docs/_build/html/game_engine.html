@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>game_engine module &mdash; Battleship 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Battleship
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">game_engine module</a><ul>
+<li><a class="reference internal" href="#game_engine.attack"><code class="docutils literal notranslate"><span class="pre">attack()</span></code></a></li>
+<li><a class="reference internal" href="#game_engine.cli_coordinates_input"><code class="docutils literal notranslate"><span class="pre">cli_coordinates_input()</span></code></a></li>
+<li><a class="reference internal" href="#game_engine.print_board"><code class="docutils literal notranslate"><span class="pre">print_board()</span></code></a></li>
+<li><a class="reference internal" href="#game_engine.simple_game_loop"><code class="docutils literal notranslate"><span class="pre">simple_game_loop()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Battleship</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">game_engine module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/game_engine.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-game_engine">
+<span id="game-engine-module"></span><h1>game_engine module<a class="headerlink" href="#module-game_engine" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="game_engine.attack">
+<span class="sig-prename descclassname"><span class="pre">game_engine.</span></span><span class="sig-name descname"><span class="pre">attack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coordinates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">board</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">battleships</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/game_engine.html#attack"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game_engine.attack" title="Link to this definition"></a></dt>
+<dd><p>Returns if attack hits a ship and updates the board and ship counters</p>
+<p>If the target coordinate is already <cite>None</cite>, the attack is a miss.
+If the attack hits, it reverts the target coordinate to <cite>None</cite>,
+then, the corresponding ship counter in the dictionary will decrement by 1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>coordinates</strong> (<em>Coordinates</em>) – Coordinates of the attack</p></li>
+<li><p><strong>board</strong> (<em>Board</em>) – Board to target and modify</p></li>
+<li><p><strong>battleships</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em>) – Dictionary of ships and its corresponding lengths</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Success or failure of the attack</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="game_engine.cli_coordinates_input">
+<span class="sig-prename descclassname"><span class="pre">game_engine.</span></span><span class="sig-name descname"><span class="pre">cli_coordinates_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/game_engine.html#cli_coordinates_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game_engine.cli_coordinates_input" title="Link to this definition"></a></dt>
+<dd><p>Prompts the user for a valid coordinate input through the command-line</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>board_size</strong> (<em>int</em><em>, </em><em>optional</em>) – Size of board for range validation check,
+defaults to 10</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple pair of <cite>int</cite> representing x and y coordinates</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Coordinates</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="game_engine.print_board">
+<span class="sig-prename descclassname"><span class="pre">game_engine.</span></span><span class="sig-name descname"><span class="pre">print_board</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_acronym</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/game_engine.html#print_board"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game_engine.print_board" title="Link to this definition"></a></dt>
+<dd><p>Prints an ASCII representation of the board’s state</p>
+<p>If <cite>show_acronym</cite> is <cite>True</cite>, each cell with a ship will be represented
+with the first two characters of the ship name. Mainly for debugging.
+If <cite>show_acronym</cite> is <cite>False</cite>, each cell with a ship will be represented
+as <cite>##</cite>
+Any unoccupied cells will be represented as <cite>::</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>board</strong> (<em>Board</em>) – Board to display</p></li>
+<li><p><strong>show_acronym</strong> (<em>bool</em><em>, </em><em>optional</em>) – Represent occupied cells with 2 character
+ship name acronyms,
+defaults to True</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="game_engine.simple_game_loop">
+<span class="sig-prename descclassname"><span class="pre">game_engine.</span></span><span class="sig-name descname"><span class="pre">simple_game_loop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/game_engine.html#simple_game_loop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game_engine.simple_game_loop" title="Link to this definition"></a></dt>
+<dd><p>Simple game loop with one player, one board and ships always revealed</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, 123166.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

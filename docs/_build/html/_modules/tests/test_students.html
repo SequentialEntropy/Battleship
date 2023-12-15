@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tests.test_students &mdash; Battleship 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Battleship
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Battleship</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">tests.test_students</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tests.test_students</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">importlib</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+
+<span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">import</span> <span class="nn">tests.test_helper_functions</span> <span class="k">as</span> <span class="nn">thf</span>
+
+<span class="n">testReport</span> <span class="o">=</span> <span class="n">thf</span><span class="o">.</span><span class="n">TestReport</span><span class="p">(</span><span class="s2">&quot;test_report.txt&quot;</span><span class="p">)</span>
+
+
+<span class="c1">########################################################################################################################</span>
+<span class="c1"># Test Components.py functions</span>
+<span class="c1">########################################################################################################################</span>
+<div class="viewcode-block" id="test_components_exists">
+<a class="viewcode-back" href="../../tests.html#tests.test_students.test_components_exists">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">depends</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">test_components_exists</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if the components module exists.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;components&#39;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;components module does not exist in your solution.&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;components module does not exist&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_initialise_board_exists">
+<a class="viewcode-back" href="../../tests.html#tests.test_students.test_initialise_board_exists">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">depends</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;test_components_exists&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">test_initialise_board_exists</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if the initialise_board function exists.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">components</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;components&#39;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">components</span><span class="p">,</span> <span class="s1">&#39;initialise_board&#39;</span><span class="p">),</span> <span class="s2">&quot;initialise_board function does not exist&quot;</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;initialise_board function does not exist in your solution.&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;initialise_board function does not exist&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_initialise_board_argument">
+<a class="viewcode-back" href="../../tests.html#tests.test_students.test_initialise_board_argument">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">depends</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;test_components_exists&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">test_initialise_board_argument</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if the initialise_board function accepts an integer argument.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">components</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;components&#39;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">components</span><span class="o">.</span><span class="n">initialise_board</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;initialise_board function does not accept an integer argument&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;initialise_board function does not accept an integer argument&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;test_initialise_board_argument failed as the function threw an unexpected error. (&quot;</span>
+                               <span class="s2">&quot;Crashed before test completed) Check the test output window for details&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;test_initialise_board_argument failed as the function threw an unexpected error. &quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_initialise_board_return_type">
+<a class="viewcode-back" href="../../tests.html#tests.test_students.test_initialise_board_return_type">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">depends</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;test_components_exists&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">test_initialise_board_return_type</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if the initialise_board function returns a list.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">components</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;components&#39;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">thf</span><span class="o">.</span><span class="n">is_list_of_lists</span><span class="p">(</span><span class="n">components</span><span class="o">.</span><span class="n">initialise_board</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;initialise_board function does not return the correct datatype&quot;</span>
+                               <span class="s2">&quot;Your initialise board function should return a list of lists of either strings or &quot;</span>
+                               <span class="s2">&quot;None values&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;initialise_board function does not return a list&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;test_initialise_board_type failed as the function initialise_board threw an &quot;</span>
+                               <span class="s2">&quot;unexpected error. (&quot;</span>
+                               <span class="s2">&quot;Crashed before test completed) Check the test output window for details&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;test_initialise_board_argument failed as the function threw an unexpected error. &quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_create_battleships_exists">
+<a class="viewcode-back" href="../../tests.html#tests.test_students.test_create_battleships_exists">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">depends</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;test_components_exists&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">test_create_battleships_exists</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if the create_battleships function exists.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">components</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;components&#39;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">components</span><span class="p">,</span> <span class="s1">&#39;create_battleships&#39;</span><span class="p">),</span> <span class="s2">&quot;create_battleships function does not exist&quot;</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;create_battleships function does not exist in your solution.&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;create_battleships function does not exist&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_battleships_txt_exists">
+<a class="viewcode-back" href="../../tests.html#tests.test_students.test_battleships_txt_exists">[docs]</a>
+<span class="k">def</span> <span class="nf">test_battleships_txt_exists</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if the battleships.txt file exists.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;battleships.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;battleships_temp.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;battleships.txt file does not exist in your solution. &quot;</span>
+                               <span class="s2">&quot;A file called battleships_temp.txt has been created in the expected location. &quot;</span>
+                               <span class="s2">&quot;Please rename this file to battleships.txt and add your battleships to it.&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;battleships.txt file does not exist&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_create_battleships_argument">
+<a class="viewcode-back" href="../../tests.html#tests.test_students.test_create_battleships_argument">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">depends</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;test_components_exists&quot;</span><span class="p">,</span> <span class="s2">&quot;test_battleships_txt_exists&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">test_create_battleships_argument</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if the create_battleships function accepts a string argument.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">components</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;components&#39;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">components</span><span class="o">.</span><span class="n">create_battleships</span><span class="p">(</span><span class="s2">&quot;battleships.txt&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;create_battleships function does not accept a string argument&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;create_battleships function does not accept a string argument&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;test_create_battleships_argument failed as the function create_battleships&quot;</span>
+                               <span class="s2">&quot; threw an unexpected error. (&quot;</span>
+                               <span class="s2">&quot;Crashed before test completed) Check the test output window for details&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;test_create_battleships_argument failed as the function threw an unexpected error. &quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_create_battleships_return_type">
+<a class="viewcode-back" href="../../tests.html#tests.test_students.test_create_battleships_return_type">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">depends</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;test_components_exists&quot;</span><span class="p">,</span> <span class="s2">&quot;test_battleships_txt_exists&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">test_create_battleships_return_type</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if the create_battleships function returns a dictionary.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">components</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;components&#39;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">thf</span><span class="o">.</span><span class="n">is_dict_of_type</span><span class="p">(</span><span class="n">components</span><span class="o">.</span><span class="n">create_battleships</span><span class="p">(</span><span class="s2">&quot;battleships.txt&quot;</span><span class="p">),</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;create_battleships function does not return a dictionary&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;create_battleships function does not return a dictionary&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;test_create_battleships_return_type failed as the function create_battleships&quot;</span>
+                               <span class="s2">&quot; threw an unexpected error. (&quot;</span>
+                               <span class="s2">&quot;Crashed before test completed) Check the test output window for details&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;test_create_battleships_return_type failed as the function threw an unexpected error. &quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_place_battleships_exists">
+<a class="viewcode-back" href="../../tests.html#tests.test_students.test_place_battleships_exists">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">depends</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;test_components_exists&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">test_place_battleships_exists</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if the place_battleships function exists.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">components</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;components&#39;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">components</span><span class="p">,</span> <span class="s1">&#39;place_battleships&#39;</span><span class="p">),</span> <span class="s2">&quot;place_battleships function does not exist&quot;</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;place_battleships function does not exist in your solution.&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;place_battleships function does not exist&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_place_battleships_arguments">
+<a class="viewcode-back" href="../../tests.html#tests.test_students.test_place_battleships_arguments">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">depends</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;test_components_exists&quot;</span><span class="p">,</span> <span class="s2">&quot;test_battleships_txt_exists&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">test_place_battleships_arguments</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if the place_battleships function accepts a list and a dictionary argument.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">components</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;components&#39;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Check to make sure the place_battleships function has a board ships and algorithm argument</span>
+        <span class="k">assert</span> <span class="s2">&quot;board&quot;</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">components</span><span class="o">.</span><span class="n">place_battleships</span><span class="p">)</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;place_battleships function&quot;</span>
+                                                                                       <span class="s2">&quot;does not have a board argument&quot;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="s2">&quot;ships&quot;</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">components</span><span class="o">.</span><span class="n">place_battleships</span><span class="p">)</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;place_battleships function &quot;</span>
+                                                                                       <span class="s2">&quot;does not have a ships argument&quot;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="s2">&quot;algorithm&quot;</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">components</span><span class="o">.</span><span class="n">place_battleships</span><span class="p">)</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;place_battleships function &quot;</span>
+                                                                                           <span class="s2">&quot;does not have a algorithm &quot;</span>
+                                                                                           <span class="s2">&quot;argument&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;place_battleships function is missing an argument.&quot;</span>
+                               <span class="s2">&quot;Check your function has a board, ships and algorithm argument&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;place_battleships function does not have a board, ships and algorithm argument&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;test_place_battleships_arguments failed as one of the functions place_battleships, &quot;</span>
+                               <span class="s2">&quot;initialise_board or create_battleships&quot;</span>
+                               <span class="s2">&quot; threw an unexpected error. (&quot;</span>
+                               <span class="s2">&quot;Crashed before test completed) Check the test output window for details&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;test_place_battleships_arguments failed as the function threw an unexpected error. &quot;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">board</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">initialise_board</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">ships</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">create_battleships</span><span class="p">(</span><span class="s2">&quot;battleships.txt&quot;</span><span class="p">)</span>
+        <span class="n">components</span><span class="o">.</span><span class="n">place_battleships</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">ships</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;place_battleships function does not accept a list (board) and a dictionary argument&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;place_battleships function does not accept a list and a dictionary argument&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;test_place_battleships_arguments failed as one of the functions place_battleships, &quot;</span>
+                               <span class="s2">&quot;initialise_board or create_battleships&quot;</span>
+                               <span class="s2">&quot; threw an unexpected error. (&quot;</span>
+                               <span class="s2">&quot;Crashed before test completed) Check the test output window for details&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;test_place_battleships_arguments failed as the function threw an unexpected error. &quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_place_battleships_return_type">
+<a class="viewcode-back" href="../../tests.html#tests.test_students.test_place_battleships_return_type">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">depends</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;test_components_exists&quot;</span><span class="p">,</span> <span class="s2">&quot;test_battleships_txt_exists&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">test_place_battleships_return_type</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if the place_battleships function returns a list of lists of strings/None values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">components</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;components&#39;</span><span class="p">)</span>
+
+    <span class="n">board</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">initialise_board</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">ships</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">create_battleships</span><span class="p">(</span><span class="s2">&quot;battleships.txt&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">thf</span><span class="o">.</span><span class="n">is_list_of_lists</span><span class="p">(</span><span class="n">components</span><span class="o">.</span><span class="n">place_battleships</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">ships</span><span class="p">),</span> <span class="nb">str</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;place_battleships function &quot;</span>
+                                                                                       <span class="s2">&quot;does not return a list of &quot;</span>
+                                                                                       <span class="s2">&quot;lists of strings/None values&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;place_battleships function does not return a list of lists of strings or None values&quot;</span>
+                               <span class="s2">&quot; The returned board should only contain None or ship names&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;place_battleships function does not return a list of lists of list of strings/None&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;test_place_battleships_return_type failed as one of the functions place_battleships, &quot;</span>
+                               <span class="s2">&quot;initialise_board or create_battleships&quot;</span>
+                               <span class="s2">&quot; threw an unexpected error. (&quot;</span>
+                               <span class="s2">&quot;Crashed before test completed)  Check the test output window for details&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;test_place_battleships_return_type failed as the function threw an unexpected error. &quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1">########################################################################################################################</span>
+<span class="c1"># Test Game Engine.py functions</span>
+<span class="c1">########################################################################################################################</span>
+
+<div class="viewcode-block" id="test_game_engine_exists">
+<a class="viewcode-back" href="../../tests.html#tests.test_students.test_game_engine_exists">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">depends</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">test_game_engine_exists</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if the game_engine module exists.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;game_engine&#39;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;game_engine module does not exist in your solution.&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;game_engine module does not exist&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">depends</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;test_game_engine_exists&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">test_attack_exists</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if the attack function exists.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">game_engine</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;game_engine&#39;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">game_engine</span><span class="p">,</span> <span class="s1">&#39;attack&#39;</span><span class="p">),</span> <span class="s2">&quot;attack function does not exist&quot;</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;attack function does not exist in your solution.&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;attack function does not exist&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="test_attack_arguments">
+<a class="viewcode-back" href="../../tests.html#tests.test_students.test_attack_arguments">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">depends</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;test_game_engine_exists&quot;</span><span class="p">,</span> <span class="s2">&quot;test_components_exists&quot;</span><span class="p">,</span> <span class="s2">&quot;test_battleships_txt_exists&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">test_attack_arguments</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if the attack function accepts a tuple, a list, and a dictionary argument.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">components</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;components&#39;</span><span class="p">)</span>
+        <span class="n">game_engine</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;game_engine&#39;</span><span class="p">)</span>
+        <span class="n">coordinates</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">board</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">initialise_board</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">battleships</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">create_battleships</span><span class="p">(</span><span class="s2">&quot;battleships.txt&quot;</span><span class="p">)</span>
+        <span class="n">game_engine</span><span class="o">.</span><span class="n">attack</span><span class="p">(</span><span class="n">coordinates</span><span class="p">,</span> <span class="n">board</span><span class="p">,</span> <span class="n">battleships</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;attack function does not accept a tuple, a list, and a dictionary argument&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;attack function does not accept a tuple, a list, and a dictionary argument&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;test_attack_arguments failed as one of the functions place_battleships, &quot;</span>
+                               <span class="s2">&quot;initialise_board or create_battleships or attack&quot;</span>
+                               <span class="s2">&quot; threw an unexpected error. (&quot;</span>
+                               <span class="s2">&quot;Crashed before test completed). Check the test output window for deatils&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;test_attack_arguments failed as one of the functions place_battleships, &quot;</span>
+                    <span class="s2">&quot;initialise_board or create_battleships or attack&quot;</span>
+                    <span class="s2">&quot; threw an unexpected error. (&quot;</span>
+                    <span class="s2">&quot;Crashed before test completed).&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_cli_coordinates_input_exists">
+<a class="viewcode-back" href="../../tests.html#tests.test_students.test_cli_coordinates_input_exists">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">depends</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;test_game_engine_exists&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">test_cli_coordinates_input_exists</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if the cli_coordinates_input function exists.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">game_engine</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;game_engine&#39;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">game_engine</span><span class="p">,</span> <span class="s1">&#39;cli_coordinates_input&#39;</span><span class="p">),</span> <span class="s2">&quot;cli_coordinates_input function does not exist&quot;</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;cli_coordinates_input function does not exist in your solution.&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;cli_coordinates_input function does not exist&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_simple_game_loop_exists">
+<a class="viewcode-back" href="../../tests.html#tests.test_students.test_simple_game_loop_exists">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">depends</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;test_game_engine_exists&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">test_simple_game_loop_exists</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if the simple_game_loop function exists.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">game_engine</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;game_engine&#39;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">game_engine</span><span class="p">,</span> <span class="s1">&#39;simple_game_loop&#39;</span><span class="p">),</span> <span class="s2">&quot;simple_game_loop function does not exist&quot;</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;simple_game_loop function does not exist in your solution.&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;simple_game_loop function does not exist&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1">########################################################################################################################</span>
+<span class="c1"># Test mp_game_engine.py functions</span>
+<span class="c1">########################################################################################################################</span>
+
+<div class="viewcode-block" id="test_mp_game_engine_exists">
+<a class="viewcode-back" href="../../tests.html#tests.test_students.test_mp_game_engine_exists">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">depends</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">test_mp_game_engine_exists</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if the mp_game_engine module exists.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;mp_game_engine&#39;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;mp_game_engine module does not exist in your solution.&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;mp_game_engine module does not exist&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_generate_attack_exists">
+<a class="viewcode-back" href="../../tests.html#tests.test_students.test_generate_attack_exists">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">depends</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;test_mp_game_engine_exists&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">test_generate_attack_exists</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if the generate_attack function exists.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">mp_game_engine</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;mp_game_engine&#39;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">mp_game_engine</span><span class="p">,</span> <span class="s1">&#39;generate_attack&#39;</span><span class="p">),</span> <span class="s2">&quot;generate_attack function does not exist&quot;</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;generate_attack function does not exist in your solution.&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;generate_attack function does not exist&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_generate_attack_return_type">
+<a class="viewcode-back" href="../../tests.html#tests.test_students.test_generate_attack_return_type">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">depends</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;test_mp_game_engine_exists&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">test_generate_attack_return_type</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if the generate_attack function returns a tuple.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">mp_game_engine</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;mp_game_engine&#39;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mp_game_engine</span><span class="o">.</span><span class="n">generate_attack</span><span class="p">(),</span> <span class="nb">tuple</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;generate_attack function does not return a tuple&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;generate_attack function does not return a tuple&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_ai_opponent_game_loop_exists">
+<a class="viewcode-back" href="../../tests.html#tests.test_students.test_ai_opponent_game_loop_exists">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">depends</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;test_mp_game_engine_exists&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">test_ai_opponent_game_loop_exists</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if the ai_opponent_game_loop function exists.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">mp_game_engine</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;mp_game_engine&#39;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">mp_game_engine</span><span class="p">,</span> <span class="s1">&#39;ai_opponent_game_loop&#39;</span><span class="p">),</span> <span class="s2">&quot;ai_opponent_game_loop function does not exist&quot;</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;ai_opponent_game_loop function does not exist in your solution.&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;ai_opponent_game_loop function does not exist&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1">########################################################################################################################</span>
+<span class="c1"># Test main.py functions</span>
+<span class="c1">########################################################################################################################</span>
+<div class="viewcode-block" id="test_main_module_exists">
+<a class="viewcode-back" href="../../tests.html#tests.test_students.test_main_module_exists">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">depends</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">test_main_module_exists</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if the main module exists.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;main&#39;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;main module does not exist in your solution.&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;main module does not exist&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_root_exists">
+<a class="viewcode-back" href="../../tests.html#tests.test_students.test_root_exists">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">depends</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;test_main_module_exists&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">test_root_exists</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if the root function exists.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">main_module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;main&#39;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">main_module</span><span class="p">,</span> <span class="s1">&#39;root&#39;</span><span class="p">),</span> <span class="s2">&quot;root function does not exist&quot;</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;root function does not exist in your solution.&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;root function does not exist&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_attack_exists">
+<a class="viewcode-back" href="../../tests.html#tests.test_students.test_attack_exists">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">order</span><span class="p">(</span><span class="n">after</span><span class="o">=</span><span class="s2">&quot;test_second&quot;</span><span class="p">)</span>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">depends</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;test_root_exists&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">test_attack_exists</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if the attack function exists.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">main_module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;main&#39;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">main_module</span><span class="p">,</span> <span class="s1">&#39;process_attack&#39;</span><span class="p">),</span> <span class="s2">&quot;process_attack function does not exist&quot;</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;process_attack function does not exist in your solution.&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;process_attack function does not exist&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_placement_interface_exists">
+<a class="viewcode-back" href="../../tests.html#tests.test_students.test_placement_interface_exists">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">depends</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;test_main_module_exists&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">test_placement_interface_exists</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test if the placement_interface function exists.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">main_module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;main&#39;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">main_module</span><span class="p">,</span> <span class="s1">&#39;placement_interface&#39;</span><span class="p">),</span> <span class="s2">&quot;placement_interface function does not exist&quot;</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="n">testReport</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;placement_interface function does not exist in your solution.&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;placement_interface function does not exist&quot;</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, 123166.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

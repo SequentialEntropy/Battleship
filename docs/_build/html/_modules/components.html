@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>components &mdash; Battleship 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Battleship
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Battleship</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">components</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for components</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">algorithms</span> <span class="kn">import</span> <span class="n">simple_placement_algorithm</span><span class="p">,</span> <span class="n">random_placement_algorithm</span><span class="p">,</span> <span class="n">custom_placement_algorithm</span>
+
+<span class="n">Board</span> <span class="o">=</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]]</span>
+
+<div class="viewcode-block" id="initialise_board">
+<a class="viewcode-back" href="../components.html#components.initialise_board">[docs]</a>
+<span class="k">def</span> <span class="nf">initialise_board</span><span class="p">(</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Board</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns a square board initialised with `None`</span>
+
+<span class="sd">    :param size: Width of the board,</span>
+<span class="sd">        defaults to 10</span>
+<span class="sd">    :type size: int, optional</span>
+<span class="sd">    :return: 2D list of length `size` in both dimensions</span>
+<span class="sd">    :rtype: list[list[None]]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">)]</span></div>
+
+
+<div class="viewcode-block" id="create_battleships">
+<a class="viewcode-back" href="../components.html#components.create_battleships">[docs]</a>
+<span class="k">def</span> <span class="nf">create_battleships</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;battleships.txt&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Loads ship lengths from a config file</span>
+
+<span class="sd">    :param filename: Name of config file,</span>
+<span class="sd">        defaults to &quot;battleships.txt&quot;</span>
+<span class="sd">    :type filename: str, optional</span>
+<span class="sd">    :raises ValueError: If any line fails to match the `string:int` format</span>
+<span class="sd">    :return: Dictionary with the key as the ship name</span>
+<span class="sd">        and the value as the ship length</span>
+<span class="sd">    :rtype: dict[str, int]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ships</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">ship_name</span><span class="p">,</span> <span class="n">ship_length</span> <span class="o">=</span> <span class="n">data</span>
+                <span class="n">ships</span><span class="p">[</span><span class="n">ship_name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ship_length</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">line</span><span class="si">}</span><span class="s2">&#39; in </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2"> does not follow the &#39;ship_name:ship_length&#39; format&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+
+        <span class="k">return</span> <span class="n">ships</span></div>
+
+
+<div class="viewcode-block" id="dict_from_json_file">
+<a class="viewcode-back" href="../components.html#components.dict_from_json_file">[docs]</a>
+<span class="k">def</span> <span class="nf">dict_from_json_file</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns a dict from the contents of a JSON file</span>
+
+<span class="sd">    :param filename: Name of JSON file</span>
+<span class="sd">    :type filename: str</span>
+<span class="sd">    :return: Dictionary derived from parsed JSON</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span></div>
+
+
+<span class="c1"># Fourth parameter is only used to supply the custom_placement_algorithm with the placement JSON containing ship coordinates</span>
+<div class="viewcode-block" id="place_battleships">
+<a class="viewcode-back" href="../components.html#components.place_battleships">[docs]</a>
+<span class="k">def</span> <span class="nf">place_battleships</span><span class="p">(</span><span class="n">board</span><span class="p">:</span> <span class="n">Board</span><span class="p">,</span> <span class="n">ships</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">algorithm</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;simple&quot;</span><span class="p">,</span> <span class="n">placement</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{})</span> <span class="o">-&gt;</span> <span class="n">Board</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Modifies board in-place, replacing `None` with the name of each ship</span>
+
+<span class="sd">    :param board: Board to modify</span>
+<span class="sd">    :type board: Board</span>
+<span class="sd">    :param ships: Dictionary of all ship types and its length,</span>
+<span class="sd">        does not contain any coordinates or rotation data</span>
+<span class="sd">    :type ships: dict[str, int]</span>
+<span class="sd">    :param algorithm: Type of placement algorithm to use,</span>
+<span class="sd">        defaults to &quot;simple&quot;</span>
+<span class="sd">    :type algorithm: str, optional</span>
+<span class="sd">    :param placement: Dictionary of ship coordinates and corresponding</span>
+<span class="sd">        rotations, only used for algorithms that benefit from user-specified</span>
+<span class="sd">        configurations, such as `custom_placement_algorithm`,</span>
+<span class="sd">        defaults to dict_from_json_file(&quot;placement.json&quot;)</span>
+<span class="sd">    :type placement: dict[str, list[str]], optional</span>
+<span class="sd">    :raises ValueError: If the `algorithm` argument does not match any</span>
+<span class="sd">        algorithms defined in the match statement</span>
+<span class="sd">    :return: A reference to the same instance as the original board passed in</span>
+<span class="sd">        the `board` argument</span>
+<span class="sd">    :rtype: Board</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">match</span> <span class="n">algorithm</span><span class="p">:</span>
+        <span class="k">case</span> <span class="s2">&quot;simple&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">simple_placement_algorithm</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">ships</span><span class="p">)</span>
+        <span class="k">case</span> <span class="s2">&quot;random&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">random_placement_algorithm</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">ships</span><span class="p">)</span>
+        <span class="k">case</span> <span class="s2">&quot;custom&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">custom_placement_algorithm</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">ships</span><span class="p">,</span> <span class="n">placement</span><span class="p">)</span>
+        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span> <span class="c1"># Raise an error if the algorithm argument is neither of the above</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The algorithm &#39;</span><span class="si">{</span><span class="n">algorithm</span><span class="si">}</span><span class="s2">&#39; is invalid&quot;</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, 123166.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
