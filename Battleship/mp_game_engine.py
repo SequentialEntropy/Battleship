@@ -74,9 +74,13 @@ def adjacent_attack_algorithm(board_size, board_history, memory):
                 current_coordinates[1] + next_direction[1]
             )
 
+            # If the attempted coordinates are out of bounds
             if (next_coordinate[0] not in range(board_size)) or (next_coordinate[1] not in range(board_size)):
-                memory["directions_to_attack"].pop(0)
-                return current_coordinates
+
+                current_hit_or_miss = False
+                next_coordinate = memory["initial_hit_coordinates"]
+                current_coordinates = next_coordinate
+                continue
 
             # If the coordinate has already been attacked
             if next_coordinate in board_history:
@@ -160,9 +164,13 @@ def parity_adjacent_attack_algorithm(board_size, board_history, memory):
                 current_coordinates[1] + next_direction[1]
             )
 
+            # If the attempted coordinates are out of bounds
             if (next_coordinate[0] not in range(board_size)) or (next_coordinate[1] not in range(board_size)):
-                memory["directions_to_attack"].pop(0)
-                return current_coordinates
+
+                current_hit_or_miss = False
+                next_coordinate = memory["initial_hit_coordinates"]
+                current_coordinates = next_coordinate
+                continue
 
             # If the coordinate has already been attacked
             if next_coordinate in board_history:
