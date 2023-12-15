@@ -20,14 +20,33 @@ def random_attack_algorithm(board_size: int) -> Coordinates:
 
     :param board_size: Range for random number generator
     :type board_size: int
-    :return: Tuple of random `int` pair representing x and y coordinates
+    :return: Tuple of random `int` pair representing x and y coordinates, for the AI's next turn
     :rtype: Coordinates
     """
     x = random.randint(0, board_size - 1)
     y = random.randint(0, board_size - 1)
     return (x, y)
 
-def adjacent_attack_algorithm(board_size, board_history, memory):
+def adjacent_attack_algorithm(board_size: int, board_history: dict[Coordinates, bool], memory: dict[str, Any]) -> Coordinates:
+    """Searches adjacent coordinates in four directions once a hit is detected
+
+    The algorithm initially randomly attacks similar to random_attack_algorithm.
+    Once a hit on a ship is detected, the algorithm then locks on to the
+    adjacent tiles, scanning each of the four cardinal directions and attacks
+    until it no longer hits, before moving on to the next direction. After the
+    target ship has sunk, it reverts to random attacks.
+
+    :param board_size: Range for random number generator
+    :type board_size: int
+    :param board_history: `Coordinates:bool` pair to supply the algorithm with
+        hit or miss data and coordinates to keep track of past attacks
+    :type board_history: dict[Coordinates, bool]
+    :param memory: Dictionary that holds data temporarily for storing the
+        algorithm's state for next iterations
+    :type memory: dict[str, Any]
+    :return: Coordinates for the AI's next turn
+    :rtype: Coordinates
+    """
     # First move is always random
     if board_history == {}:
         return random_attack_algorithm(board_size)
@@ -89,10 +108,20 @@ def adjacent_attack_algorithm(board_size, board_history, memory):
                 continue # Skip to the next cell in the same direction
 
             return next_coordinate
+        
+    return random_attack_algorithm(board_size)
 
 def parity_random_attack_algorithm(board_size: int, invert_parity: bool = False) -> Coordinates:
-    """Generates random x and y coordinates within range of given `board_size`
+    """Generates random x and y coordinates with `board_size` and parity
 
+    `x` and `y` will either have the same odd-even parity or different parity
+    This results in coordinates out of a checkerboard pattern selected if
+    multiple numbers are generated with the same parity settings.
+
+    Counterpart to the `random_attack_algorithm`.
+
+    :param board_size: _description_
+    :type board_size: int
     :param board_size: Range for random number generator
     :type board_size: int
     :return: Tuple of random `int` pair representing x and y coordinates
@@ -113,7 +142,25 @@ def parity_random_attack_algorithm(board_size: int, invert_parity: bool = False)
 
     return (x, y)
 
-def parity_adjacent_attack_algorithm(board_size, board_history, memory):
+def parity_adjacent_attack_algorithm(board_size: int, board_history: dict[Coordinates, bool], memory: dict[str, Any]) -> Coordinates:
+    """Searches adjacent coordinates to hit with parity based random x and y.
+
+    Similar features to the non-parity based adjacent_attack_algorithm,
+    with the sole difference of using the parity_random_attack_algorithm
+    in place of the random_attack_algorithm. The algorithm only attacks on a
+    checkerboard-like alternating pattern.
+
+    :param board_size: Range for random number generator
+    :type board_size: int
+    :param board_history: `Coordinates:bool` pair to supply the algorithm with
+        hit or miss data and coordinates to keep track of past attacks
+    :type board_history: dict[Coordinates, bool]
+    :param memory: Dictionary that holds data temporarily for storing the
+        algorithm's state for next iterations
+    :type memory: dict[str, Any]
+    :return: Coordinates for the AI's next turn
+    :rtype: Coordinates
+    """
     # If invert_parity doesn't exist, initialise it
     if "invert_parity" not in memory:
         memory["invert_parity"] = random.choice([True, False])
@@ -179,9 +226,10 @@ def parity_adjacent_attack_algorithm(board_size, board_history, memory):
                 continue # Skip to the next cell in the same direction
 
             return next_coordinate
+    
+    return parity_random_attack_algorithm(board_size, memory["invert_parity"])
 
-def generate_attack(board_size: int = 10, algorithm: str = "random", board_history: dict[tuple[int, int], bool] = {}, memory: dict = None) -> Coordinates:
-    # TODO rewrite docstring
+def generate_attack(board_size: int = 10, algorithm: str = "random", board_history: dict[Coordinates, bool] = {}, memory: dict = {}) -> Coordinates:
     """Generates AI attack coordinates based on `algorithm`
 
     :param board_size: Size of board,
@@ -190,6 +238,14 @@ def generate_attack(board_size: int = 10, algorithm: str = "random", board_histo
     :param algorithm: Algorithm used,
         defaults to "random"
     :type algorithm: str, optional
+    :param board_history: `Coordinates:bool` pair to supply the algorithm with
+        hit or miss data and coordinates to keep track of past attacks,
+        defaults to {}
+    :type board_history: dict[Coordinates, bool], optional
+    :param memory: Dictionary that holds data temporarily for storing the
+        algorithm's state for next iterations, used for the adjacent and
+        parity_adjacent algorithms, defaults to None
+    :type memory: dict, optional
     :raises ValueError: When `algorithm` does not match any defined algorithms
     :return: Tuple `int` pair representing x and y coordinates of AI's turn
     :rtype: Coordinates
