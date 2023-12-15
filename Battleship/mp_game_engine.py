@@ -74,7 +74,93 @@ def adjacent_attack_algorithm(board_size, board_history, memory):
                 current_coordinates[1] + next_direction[1]
             )
 
-            if next_coordinate[0] not in range(board_size) or next_coordinate[1] not in range(board_size):
+            if (next_coordinate[0] not in range(board_size)) or (next_coordinate[1] not in range(board_size)):
+                memory["directions_to_attack"].pop(0)
+                return current_coordinates
+
+            # If the coordinate has already been attacked
+            if next_coordinate in board_history:
+                current_coordinates = next_coordinate
+                current_hit_or_miss = board_history[next_coordinate]
+                continue # Skip to the next cell in the same direction
+
+            return next_coordinate
+
+def parity_random_attack_algorithm(board_size: int, invert_parity: bool = False) -> Coordinates:
+    """Generates random x and y coordinates within range of given `board_size`
+
+    :param board_size: Range for random number generator
+    :type board_size: int
+    :return: Tuple of random `int` pair representing x and y coordinates
+    :rtype: Coordinates
+    """
+    x = random.randrange(0, board_size)
+
+    if invert_parity:
+        if x % 2 == 1:
+            y = random.randrange(0, board_size, 2)
+        else:
+            y = random.randrange(1, board_size, 2)
+    else:
+        if x % 2 == 0:
+            y = random.randrange(0, board_size, 2)
+        else:
+            y = random.randrange(1, board_size, 2)
+
+    return (x, y)
+
+def parity_adjacent_attack_algorithm(board_size, board_history, memory):
+    # If invert_parity doesn't exist, initialise it
+    if "invert_parity" not in memory:
+        memory["invert_parity"] = random.choice([True, False])
+
+    # First move is always random
+    if board_history == {}:
+        return parity_random_attack_algorithm(board_size, memory["invert_parity"])
+
+    # If directions_to_attack doesn't exist, initialise it
+    if "directions_to_attack" not in memory:
+        memory["directions_to_attack"] = []
+
+    current_coordinates = list(board_history)[-1] # Most recent attack
+    current_hit_or_miss = board_history[current_coordinates]
+
+    # If current_coordinates were random coordinates but resulted in a hit
+    if current_hit_or_miss and memory["directions_to_attack"] == []:
+        # Then, initialise initial_hit_coordinates and directions_to_attack
+        memory["initial_hit_coordinates"] = current_coordinates
+        memory["directions_to_attack"] = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        # Make the AI's choice of direction less predictable in order
+        random.shuffle(memory["directions_to_attack"])
+
+    # Ensure the loop runs at least once - the current coordinates are already in board_history
+    next_coordinate = current_coordinates
+
+    while next_coordinate in board_history:
+
+        # If current_coordinates was the first miss in this direction
+        if len(memory["directions_to_attack"]) > 0 and not current_hit_or_miss:
+            # Then there's nothing else to check in this direction - so pop this direction
+            memory["directions_to_attack"].pop(0)
+            current_coordinates = memory["initial_hit_coordinates"]
+        
+        # If there's no directions to check and current_coordinates was a miss
+        if len(memory["directions_to_attack"]) == 0 and not current_hit_or_miss:
+            # This means a random stranded attack, no previous adjacent hits have been made
+            # Continue attacking randomly
+            return parity_random_attack_algorithm(board_size, memory["invert_parity"])
+
+        # If this direction isn't exhausted
+        if len(memory["directions_to_attack"]) > 0:
+            # Continue advancing the attacks toward the same direction
+            next_direction = memory["directions_to_attack"][0]
+
+            next_coordinate = (
+                current_coordinates[0] + next_direction[0],
+                current_coordinates[1] + next_direction[1]
+            )
+
+            if (next_coordinate[0] not in range(board_size)) or (next_coordinate[1] not in range(board_size)):
                 memory["directions_to_attack"].pop(0)
                 return current_coordinates
 
@@ -105,6 +191,8 @@ def generate_attack(board_size: int = 10, algorithm: str = "random", board_histo
             return random_attack_algorithm(board_size)
         case "adjacent":
             return adjacent_attack_algorithm(board_size, board_history, memory)
+        case "parity_adjacent":
+            return parity_adjacent_attack_algorithm(board_size, board_history, memory)
         case _:
             raise ValueError(f"The algorithm '{algorithm}' is invalid")
 

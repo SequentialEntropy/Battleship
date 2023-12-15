@@ -91,7 +91,7 @@ def process_attack() -> tuple[str, int] | Response:
 
     # AI attacks Player
     while True:
-        coordinates = generate_attack(len(players["Player"]["board"]), algorithm="adjacent", board_history=players["Player"]["board_history"], memory=players["AI"]["memory"])
+        coordinates = generate_attack(len(players["Player"]["board"]), algorithm="parity_adjacent", board_history=players["Player"]["board_history"], memory=players["AI"]["memory"])
         if coordinates not in players["Player"]["board_history"]:
             break
 
