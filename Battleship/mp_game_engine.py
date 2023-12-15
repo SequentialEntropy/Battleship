@@ -31,7 +31,7 @@ def adjacent_attack_algorithm(board_size, board_history, memory):
     # First move is always random
     if board_history == {}:
         return random_attack_algorithm(board_size)
-    
+
     # If directions_to_attack doesn't exist, initialise it
     if "directions_to_attack" not in memory:
         memory["directions_to_attack"] = []
@@ -237,7 +237,7 @@ def ai_opponent_game_loop() -> None:
 
     print("-" * 32)
 
-    algorithms = ["random", "adjacent"]
+    algorithms = ["random", "adjacent", "parity_adjacent"]
 
     while True:
         print("Choose an AI algorithm:")
