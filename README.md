@@ -71,6 +71,7 @@ python3 -m pip install -r requirements-dev.txt
 ## Details
 
 Published as a [GitHub Repository](https://github.com/SequentialEntropy/Battleship).
+
 Project licensed with the [MIT License](LICENSE)
 
 Author - Candidate 123166
