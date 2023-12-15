@@ -15,8 +15,7 @@ green = "\033[92m"
 aqua = "\033[96m"
 reset = "\033[0m"
 
-def random_attack_algorithm(board: int) -> Coordinates:
-    # TODO rewrite docstring
+def random_attack_algorithm(board_size: int) -> Coordinates:
     """Generates random x and y coordinates within range of given `board_size`
 
     :param board_size: Range for random number generator
@@ -24,12 +23,70 @@ def random_attack_algorithm(board: int) -> Coordinates:
     :return: Tuple of random `int` pair representing x and y coordinates
     :rtype: Coordinates
     """
-    board_size = len(board)
     x = random.randint(0, board_size - 1)
     y = random.randint(0, board_size - 1)
     return (x, y)
 
-def generate_attack(board: Board = [[None]], algorithm: str = "random", memory: dict = None) -> Coordinates:
+def adjacent_attack_algorithm(board_size, board_history, memory):
+    # First move is always random
+    if board_history == {}:
+        return random_attack_algorithm(board_size)
+    
+    # If directions_to_attack doesn't exist, initialise it
+    if "directions_to_attack" not in memory:
+        memory["directions_to_attack"] = []
+
+    current_coordinates = list(board_history)[-1] # Most recent attack
+    current_hit_or_miss = board_history[current_coordinates]
+
+    # If current_coordinates were random coordinates but resulted in a hit
+    if current_hit_or_miss and memory["directions_to_attack"] == []:
+        # Then, initialise initial_hit_coordinates and directions_to_attack
+        memory["initial_hit_coordinates"] = current_coordinates
+        memory["directions_to_attack"] = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        # Make the AI's choice of direction less predictable in order
+        random.shuffle(memory["directions_to_attack"])
+
+    # Ensure the loop runs at least once - the current coordinates are already in board_history
+    next_coordinate = current_coordinates
+
+    while next_coordinate in board_history:
+
+        # If current_coordinates was the first miss in this direction
+        if len(memory["directions_to_attack"]) > 0 and not current_hit_or_miss:
+            # Then there's nothing else to check in this direction - so pop this direction
+            memory["directions_to_attack"].pop(0)
+            current_coordinates = memory["initial_hit_coordinates"]
+        
+        # If there's no directions to check and current_coordinates was a miss
+        if len(memory["directions_to_attack"]) == 0 and not current_hit_or_miss:
+            # This means a random stranded attack, no previous adjacent hits have been made
+            # Continue attacking randomly
+            return random_attack_algorithm(board_size)
+
+        # If this direction isn't exhausted
+        if len(memory["directions_to_attack"]) > 0:
+            # Continue advancing the attacks toward the same direction
+            next_direction = memory["directions_to_attack"][0]
+
+            next_coordinate = (
+                current_coordinates[0] + next_direction[0],
+                current_coordinates[1] + next_direction[1]
+            )
+
+            if next_coordinate[0] not in range(board_size) or next_coordinate[1] not in range(board_size):
+                memory["directions_to_attack"].pop(0)
+                return current_coordinates
+
+            # If the coordinate has already been attacked
+            if next_coordinate in board_history:
+                current_coordinates = next_coordinate
+                current_hit_or_miss = board_history[next_coordinate]
+                continue # Skip to the next cell in the same direction
+
+            return next_coordinate
+
+def generate_attack(board_size: int = 10, algorithm: str = "random", board_history: dict[tuple[int, int], bool] = {}, memory: dict = None) -> Coordinates:
     # TODO rewrite docstring
     """Generates AI attack coordinates based on `algorithm`
 
@@ -45,7 +102,9 @@ def generate_attack(board: Board = [[None]], algorithm: str = "random", memory: 
     """
     match algorithm:
         case "random":
-            return random_attack_algorithm(board)
+            return random_attack_algorithm(board_size)
+        case "adjacent":
+            return adjacent_attack_algorithm(board_size, board_history, memory)
         case _:
             raise ValueError(f"The algorithm '{algorithm}' is invalid")
 
@@ -82,7 +141,7 @@ def ai_opponent_game_loop() -> None:
 
     print("-" * 32)
 
-    algorithms = ["random"]
+    algorithms = ["random", "adjacent"]
 
     while True:
         print("Choose an AI algorithm:")
@@ -142,7 +201,7 @@ def ai_opponent_game_loop() -> None:
 
         # AI attacks Player
         while True:
-            coordinates = generate_attack(players["Player"]["board"], algorithm=algorithm, memory=players["AI"]["memory"])
+            coordinates = generate_attack(len(players["Player"]["board"]), algorithm=algorithm, board_history=players["Player"]["board_history"], memory=players["AI"]["memory"])
             if coordinates not in players["Player"]["board_history"]:
                 break
 
