@@ -237,15 +237,17 @@ def ai_opponent_game_loop() -> None:
 
     print("-" * 32)
 
-    algorithms = ["random", "adjacent", "parity_adjacent"]
+    algorithms = {"random": "easy", "adjacent": "medium", "parity_adjacent": "hard"}
 
     while True:
         print("Choose an AI algorithm:")
-        for i in range(len(algorithms)):
-            print(f"{i} - {algorithms[i]}")
+        i = 0
+        for algorithm in algorithms:
+            print(f"{i} - {algorithm} ({algorithms[algorithm]})")
+            i += 1
         try:
             choice = int(input("Choice: "))
-            algorithm = algorithms[choice]
+            algorithm = list(algorithms.keys())[choice]
             break
         except ValueError:
             continue
