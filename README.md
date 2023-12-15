@@ -1,14 +1,10 @@
 # Battleship
 
-  
-
-The README file should include a list of all features that you consider are complete followed by a typical README file structure. The self-assessment must be less than 200 words and understandable within 1 minute. The subsequent README must make it clear how to execute the project, the license and any other relevant details.
-
-  
-
 ## Introduction
 
 This is a Python project recreating the classic board game, *Battleship*, implementing a web interface through Flask (For ECM1400).
+
+[Sphinx Documentation](https://htmlpreview.github.io/?https://github.com/SequentialEntropy/Battleship/blob/master/docs/_build/html/modules.html)
 
 ## Design Choices (200 word Self-Assessment)
 
@@ -73,5 +69,7 @@ python3 -m pip install -r requirements-dev.txt
 Published as a [GitHub Repository](https://github.com/SequentialEntropy/Battleship).
 
 Project licensed with the [MIT License](LICENSE)
+
+Documentation generated with [Sphinx](https://htmlpreview.github.io/?https://github.com/SequentialEntropy/Battleship/blob/master/docs/_build/html/modules.html)
 
 Author - Candidate 123166
