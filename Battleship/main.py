@@ -42,7 +42,8 @@ def placement_interface() -> str | Response:
             players["AI"] = {
                 "board": components.place_battleships(components.initialise_board(board_size), ships, "random"),
                 "battleships": ships.copy(),
-                "board_history": {} # Store the coords:result as (int, int):bool to track the Player's attack attempt history
+                "board_history": {}, # Store the coords:result as (int, int):bool to track the Player's attack attempt history
+                "memory": {}
             }
 
             return jsonify({"message": "Success!"})
@@ -90,7 +91,7 @@ def process_attack() -> tuple[str, int] | Response:
 
     # AI attacks Player
     while True:
-        coordinates = generate_attack(len(players["Player"]["board"]))
+        coordinates = generate_attack(len(players["Player"]["board"]), algorithm="parity_adjacent", board_history=players["Player"]["board_history"], memory=players["AI"]["memory"])
         if coordinates not in players["Player"]["board_history"]:
             break
 
